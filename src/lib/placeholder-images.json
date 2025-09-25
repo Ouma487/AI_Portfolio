@@ -1,3 +1,28 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "1",
+      "description": "Abstract network visualization",
+      "imageUrl": "https://images.unsplash.com/photo-1738082956220-a1f20a8632ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhYnN0cmFjdCUyMG5ldHdvcmt8ZW58MHx8fHwxNzU4ODE0Nzc1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract network"
+    },
+    {
+      "id": "2",
+      "description": "Code on a screen",
+      "imageUrl": "https://images.unsplash.com/photo-1658274474930-bb27a64022c2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjb2RlJTIwc2NyZWVufGVufDB8fHx8MTc1ODgwMjU0MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "code screen"
+    },
+    {
+      "id": "3",
+      "description": "Colorful abstract generative art",
+      "imageUrl": "https://images.unsplash.com/photo-1642192248085-a40d80a208bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxnZW5lcmF0aXZlJTIwYXJ0fGVufDB8fHx8MTc1ODgzMDEyNHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "generative art"
+    },
+    {
+      "id": "4",
+      "description": "Chat bubbles and icons",
+      "imageUrl": "https://images.unsplash.com/photo-1560981559-da833cf71a09?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjaGF0JTIwYnViYmxlc3xlbnwwfHx8fDE3NTg3NzkwNjN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "chat bubbles"
+    }
+  ]
 }
