@@ -3,9 +3,10 @@ import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { projects } from '@/lib/data';
-import { ExternalLink } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import Link from 'next/link';
 
 const ProjectsSection = () => {
   const getImage = (id: string) => PlaceHolderImages.find(img => img.id === id);
@@ -50,10 +51,10 @@ const ProjectsSection = () => {
                     ))}
                   </div>
                   <Button variant="link" asChild className="p-0 h-auto">
-                    <a href={project.link.href} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="mr-2 h-4 w-4" />
-                      {project.link.label}
-                    </a>
+                    <Link href={`/projects/${project.id}`}>
+                      View Project
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
                   </Button>
                 </CardFooter>
               </Card>
