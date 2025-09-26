@@ -27,8 +27,8 @@ export default function Home() {
 
 function HeroSection() {
     return (
-        <section className="relative h-[80vh] min-h-[500px] flex items-center justify-center text-center bg-secondary">
-             <div className="container mx-auto px-4 md:px-6 z-10 space-y-6">
+        <section className="relative h-[80vh] min-h-[500px] flex items-center justify-center text-center bg-secondary px-4">
+             <div className="container mx-auto z-10 space-y-6">
                 <h1 className="font-headline text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
                     {personalData.name}
                 </h1>

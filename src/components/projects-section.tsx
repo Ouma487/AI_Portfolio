@@ -22,7 +22,7 @@ const ProjectsSection = () => {
             Here are some of the projects I've worked on to solve real-world problems.
           </p>
         </div>
-        <div className="grid gap-8 md:grid-cols-2">
+        <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2">
           {projects.map((project) => {
             const image = getImage(project.imagePlaceholderId);
             return (

@@ -26,7 +26,7 @@ export default function ProjectDetailsPage() {
         <main className="flex-grow container mx-auto px-4 py-16 text-center">
           <h1 className="text-2xl font-bold">Project not found</h1>
           <Button asChild variant="link" className="mt-4">
-            <Link href="/">
+            <Link href="/#projects">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Home
             </Link>
@@ -56,7 +56,7 @@ export default function ProjectDetailsPage() {
             </h1>
             
             {image && (
-              <div className="relative h-60 sm:h-80 md:h-96 w-full rounded-lg overflow-hidden my-6 md:my-8 shadow-lg">
+              <div className="relative aspect-video w-full rounded-lg overflow-hidden my-6 md:my-8 shadow-lg">
                 <Image
                   src={image.imageUrl}
                   alt={project.title}
