@@ -6,12 +6,12 @@ import ExperienceSection from '@/components/experience-section';
 import ContactSection from '@/components/contact-section';
 import { personalData } from '@/lib/data';
 import { Button } from '@/components/ui/button';
-import { ArrowDown } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground">
+    <div className="flex flex-col min-h-screen bg-background text-foreground font-body">
       <Header />
       <main className="flex-grow">
         <HeroSection />
@@ -27,27 +27,33 @@ export default function Home() {
 
 function HeroSection() {
     return (
-        <section className="relative h-[80vh] min-h-[500px] flex items-center justify-center text-center bg-secondary px-4">
-             <div className="container mx-auto z-10 space-y-6">
-                <h1 className="font-headline text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
-                    {personalData.name}
-                </h1>
-                <p className="mx-auto max-w-[700px] text-primary/80 text-lg md:text-xl">
-                    {personalData.title}
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Button asChild size="lg">
-                        <Link href="#projects">View My Work</Link>
-                    </Button>
-                    <Button asChild size="lg" variant="outline">
-                        <Link href="#contact">Contact Me</Link>
-                    </Button>
+        <section id="home" className="relative py-20 md:py-32">
+             <div className="container mx-auto grid md:grid-cols-2 gap-12 items-center px-4 md:px-6">
+                <div className="space-y-6 text-center md:text-left">
+                    <h1 className="font-headline text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
+                        {personalData.name}
+                    </h1>
+                    <p className="text-xl md:text-2xl text-muted-foreground">
+                        {personalData.title}
+                    </p>
+                     <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <Button asChild size="lg" className="bg-gradient-to-r from-primary to-accent text-primary-foreground">
+                            <Link href="#projects">View My Work</Link>
+                        </Button>
+                        <Button asChild size="lg" variant="outline">
+                            <Link href="#contact">Contact Me</Link>
+                        </Button>
+                    </div>
                 </div>
-            </div>
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-                <Link href="#about" aria-label="Scroll to about section">
-                    <ArrowDown className="h-8 w-8 text-muted-foreground animate-bounce" />
-                </Link>
+                <div className="relative aspect-square max-w-md mx-auto md:max-w-none">
+                  <Image 
+                    src="https://picsum.photos/seed/hero/600/600"
+                    alt="Hero image"
+                    fill
+                    className="object-cover rounded-full"
+                    data-ai-hint="abstract colorful"
+                  />
+                </div>
             </div>
         </section>
     )
