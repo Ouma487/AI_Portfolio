@@ -93,7 +93,13 @@ export default {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
+       textStrokeWidth: {
+        '1': '1px',
+        '2': '2px',
+        '3': '3px',
+      },
+      textStrokeColor: theme => theme('colors'),
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate'),require('tailwindcss-text-fill-stroke')],
 } satisfies Config;

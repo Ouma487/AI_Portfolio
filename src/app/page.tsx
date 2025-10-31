@@ -1,60 +1,104 @@
-import Header from '@/components/header';
-import Footer from '@/components/footer';
+
 import AboutSection from '@/components/about-section';
 import ProjectsSection from '@/components/projects-section';
 import ExperienceSection from '@/components/experience-section';
-import ContactSection from '@/components/contact-section';
+import Contact from '@/components/contact';
+
 import { personalData } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Mail, Github, Linkedin } from 'lucide-react';
+import SkillsSection from '@/components/skills-section';
+import AiDataScienceSection from '@/components/ai-data-science-section';
+import EducationSection from '@/components/education';
+
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground font-body">
-      <Header />
-      <main className="flex-grow">
-        <HeroSection />
-        <AboutSection />
-        <ProjectsSection />
-        <ExperienceSection />
-        <ContactSection />
-      </main>
-      <Footer />
-    </div>
+    <main className="flex-grow">
+      <HeroSection />
+      <SkillsSection />
+      <AiDataScienceSection />
+      <ExperienceSection />
+      <EducationSection />
+      <AboutSection />
+      <ProjectsSection />
+      <Contact />
+    </main>
   );
 }
 
+
+
+
+
 function HeroSection() {
-    return (
-        <section id="home" className="relative py-20 md:py-32">
-             <div className="container mx-auto grid md:grid-cols-2 gap-12 items-center px-4 md:px-6">
-                <div className="space-y-6 text-center md:text-left">
-                    <h1 className="font-headline text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
-                        {personalData.name}
-                    </h1>
-                    <p className="text-xl md:text-2xl text-muted-foreground">
-                        {personalData.title}
-                    </p>
-                     <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                        <Button asChild size="lg" className="bg-gradient-to-r from-primary to-accent text-primary-foreground">
-                            <Link href="#projects">View My Work</Link>
-                        </Button>
-                        <Button asChild size="lg" variant="outline">
-                            <Link href="#contact">Contact Me</Link>
-                        </Button>
-                    </div>
-                </div>
-                <div className="relative aspect-square max-w-md mx-auto md:max-w-none">
-                  <Image 
-                    src="https://picsum.photos/seed/hero/600/600"
-                    alt="Hero image"
-                    fill
-                    className="object-cover rounded-full"
-                    data-ai-hint="abstract colorful"
-                  />
-                </div>
-            </div>
-        </section>
-    )
+  return (
+    <section className="py-24 px-8 md:py-32 bg-white">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-2 items-center gap-16">
+        
+        {/* Left Column: Text */}
+        <div className="space-y-6 max-w-2xl">
+          <div className="text-4xl sm:text-5xl font-light leading-snug">
+          <p>
+          Hello I’m{' '}
+          <span className="font-bold whitespace-nowrap">{personalData.name}</span>
+        </p>
+
+        <h1 className="text-4xl sm:text-5xl font-light leading-snug">
+            <span className="font-bold text-black">AI </span>
+            <span className="text-outline">Engineer</span>
+          </h1>
+
+
+            <p>Based In <span className="font-extrabold text-black">France.</span></p>
+          </div>
+
+          <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
+            {personalData.bio}
+          </p>
+
+          {/* Social Icons */}
+          <div className="flex gap-4 pt-2">
+            <a
+              href="https://www.linkedin.com/in/oumaima-chater/"
+              target="_blank"
+              className="bg-black text-white p-3 rounded"
+              aria-label="LinkedIn"
+            >
+              <Linkedin className="w-5 h-5" />
+            </a>
+            <a
+              href="https://github.com/Ouma487"
+              target="_blank"
+              className="border border-black p-3 rounded"
+              aria-label="GitHub"
+            >
+              <Github className="w-5 h-5" />
+            </a>
+            <a
+              href="mailto:chtr.oumaima@gmail.com"
+              className="border border-black p-3 rounded"
+              aria-label="Email"
+            >
+              <Mail className="w-5 h-5" />
+            </a>
+          </div>
+        </div>
+
+        {/* Right Column: Illustration */}
+        <div className="w-full max-w-md mx-auto">
+          <Image
+            src="/images/girl banner 1.svg"
+            alt="Hero illustration"
+            width={500}
+            height={400}
+            className="w-full h-auto object-contain"
+            priority
+          />
+        </div>
+      </div>
+    </section>
+  );
 }

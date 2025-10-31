@@ -2,15 +2,17 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { personalData } from '@/lib/data';
 import { cn } from '@/lib/utils';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Download } from 'lucide-react';
 
 const navLinks = [
-  { name: 'About', href: '#about' },
+  { name: 'About Me', href: '#about' },
+  { name: 'Skills', href: '#skills' },
   { name: 'Projects', href: '#projects' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Contact Me', href: '#contact' },
 ];
 
 const Header = () => {
@@ -22,15 +24,13 @@ const Header = () => {
       setIsScrolled(window.scrollY > 10);
     };
     window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+
+  const handleLinkClick = (e, href) => {
     if (href.startsWith('#')) {
-        e.preventDefault();
-        document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+      e.preventDefault();
+      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
     }
     setIsMenuOpen(false);
   };
@@ -38,63 +38,88 @@ const Header = () => {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 transition-all duration-300 font-body',
+        'sticky top-0 z-50 transition-all duration-300 font-sora',
         isScrolled ? 'bg-background/80 backdrop-blur-sm shadow-md' : 'bg-transparent'
       )}
     >
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
-        <Link href="/" className="text-2xl font-bold text-primary bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            {personalData.name}
+        {/* Left Logo */}
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/logos/logo.png"
+            alt="Portfolio Logo"
+            width={40}
+            height={40}
+            className="h-10 w-auto"
+            priority
+          />
+          <span className="text-lg font-bold tracking-[0.02em]">Portfolio</span>
         </Link>
-        
+
+        {/* Center Navigation */}
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
               onClick={(e) => handleLinkClick(e, link.href)}
-              className="font-medium text-foreground/80 transition-colors hover:text-primary"
+              className="font-medium text-[16px] leading-[24px] tracking-[0.02em] text-foreground/80 transition-colors hover:text-primary"
             >
               {link.name}
             </Link>
           ))}
         </nav>
 
+        {/* Right Resume Button */}
         <div className="hidden md:flex items-center">
-             <Button asChild className="bg-gradient-to-r from-primary to-accent text-primary-foreground">
-                <a href={personalData.resumeUrl} target="_blank" rel="noopener noreferrer">
-                    Resume
-                </a>
-            </Button>
+          <Button
+            asChild
+            className="bg-black text-white hover:bg-gray-900 flex items-center gap-2"
+          >
+            <a href="/pdfs/CV_Oumaima_Chater (2).pdf" download>
+              Resume
+              <Download className="h-4 w-4" />
+            </a>
+          </Button>
         </div>
 
+        {/* Mobile Menu Button */}
         <div className="md:hidden">
-          <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
             {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             <span className="sr-only">Toggle menu</span>
           </Button>
         </div>
       </div>
 
+      {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-background border-t">
-            <nav className="flex flex-col items-center gap-4 p-4">
-                {navLinks.map((link) => (
-                    <Link
-                        key={link.name}
-                        href={link.href}
-                        onClick={(e) => handleLinkClick(e, link.href)}
-                        className="w-full text-center font-medium text-foreground/80 transition-colors hover:text-primary py-2"
-                    >
-                        {link.name}
-                    </Link>
-                ))}
-                 <Button asChild className="w-full bg-gradient-to-r from-primary to-accent text-primary-foreground">
-                    <a href={personalData.resumeUrl} target="_blank" rel="noopener noreferrer">
-                        Resume
-                    </a>
-                </Button>
-            </nav>
+        <div className="md:hidden bg-background border-t font-sora">
+          <nav className="flex flex-col items-center gap-4 p-4">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={(e) => handleLinkClick(e, link.href)}
+                className="w-full text-center font-medium text-[16px] leading-[24px] tracking-[0.02em] text-foreground/80 transition-colors hover:text-primary py-2"
+              >
+                {link.name}
+              </Link>
+            ))}
+            <Button
+              asChild
+              className="w-full bg-black text-white hover:bg-gray-900 flex items-center justify-center gap-2"
+            >
+              <a href={personalData.resumeUrl} download>
+                Resume
+                <Download className="h-4 w-4" />
+              </a>
+            </Button>
+          </nav>
         </div>
       )}
     </header>

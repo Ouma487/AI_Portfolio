@@ -1,106 +1,89 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { use } from 'react';
 import { projects } from '@/lib/data';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
-import Header from '@/components/header';
-import Footer from '@/components/footer';
-import { Badge } from '@/components/ui/badge';
+import { notFound, useRouter } from 'next/navigation';
 import Image from 'next/image';
-import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, ExternalLink } from 'lucide-react';
-import React from 'react';
+import { ArrowLeft } from 'lucide-react';
 
-export default function ProjectDetailsPage() {
-  const params = useParams();
-  const projectId = params.id as string;
-  
-  const project = projects.find((p) => p.id === projectId);
-  const image = PlaceHolderImages.find(img => img.id === project?.imagePlaceholderId);
+interface ProjectPageProps {
+  params: Promise<{ id: string }>;
+}
 
-  if (!project) {
-    return (
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <main className="flex-grow container mx-auto px-4 py-16 text-center">
-          <h1 className="text-2xl font-bold">Project not found</h1>
-          <Button asChild variant="link" className="mt-4">
-            <Link href="/#projects">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Home
-            </Link>
-          </Button>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
+const ProjectPage = ({ params }: ProjectPageProps) => {
+  const router = useRouter();
+  const { id } = use(params); 
+  const project = projects.find((p) => p.id.toLowerCase() === id.toLowerCase());
+
+  if (!project) notFound();
 
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground">
-      <Header />
-      <main className="flex-grow py-12 md:py-20">
-        <div className="container mx-auto px-4 md:px-6">
-            <div className='mb-6 md:mb-8'>
-                <Button asChild variant="ghost" className="pl-0 text-sm md:text-base">
-                    <Link href="/#projects">
-                        <ArrowLeft className="mr-2 h-4 w-4" />
-                        All Projects
-                    </Link>
-                </Button>
-            </div>
-          <article className="mx-auto max-w-4xl">
-            <h1 className="font-headline text-3xl font-extrabold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl mb-4">
-              {project.title}
-            </h1>
-            
-            {image && (
-              <div className="relative aspect-video w-full rounded-lg overflow-hidden my-6 md:my-8 shadow-lg">
-                <Image
-                  src={image.imageUrl}
-                  alt={project.title}
-                  fill
-                  className="object-cover"
-                  data-ai-hint={image.imageHint}
-                />
-              </div>
-            )}
-            
-            <div className="prose prose-base md:prose-lg max-w-none text-foreground/80">
-                <p className="lead text-lg md:text-xl">{project.description}</p>
-                
-                <p>
-                    This project showcases the implementation of various modern technologies to deliver a robust and efficient solution. The primary goal was to address a key challenge in its domain by leveraging cutting-edge techniques and a user-centric design approach.
-                </p>
+    <div className="min-h-screen bg-white text-black">
+      {/* --- Project Overview Section --- */}
+      <main className="container mx-auto px-4 md:px-8 py-16 md:py-24">
+        <div className="grid md:grid-cols-2 gap-12 items-start">
+          <div className="w-full">
+            <Image
+              src={project.image}
+              alt={project.title}
+              width={600}
+              height={450}
+              className="rounded-2xl shadow-2xl w-full h-auto object-cover"
+            />
+          </div>
 
-                <p>
-                    Throughout the development process, a strong emphasis was placed on code quality, scalability, and maintainability. The architecture was designed to be modular, allowing for easy integration of new features and adaptation to future requirements.
-                </p>
+          <div className="flex flex-col space-y-6">
+            <Button
+              variant="outline"
+              onClick={() => router.back()}
+              className="w-fit border border-black bg-black text-white hover:bg-gray-900"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" /> Back
+            </Button>
+
+            <div>
+              <p className="text-5xl md:text-6xl font-extrabold text-gray-300 leading-none">
+                {project.id}
+              </p>
+              <h1 className="text-3xl md:text-4xl font-bold font-headline mt-2">
+                {project.title}
+              </h1>
             </div>
 
-            <div className="my-6 md:my-8">
-              <h3 className="font-headline text-xl md:text-2xl font-bold mb-4">Technology Stack</h3>
-              <div className="flex flex-wrap gap-2">
-                {project.techStack.map((tech) => (
-                  <Badge key={tech} variant="secondary" className="text-sm md:text-base py-1 px-3">{tech}</Badge>
-                ))}
-              </div>
-            </div>
-
-            <div className="my-6 md:my-8">
-                <Button asChild>
-                    <a href={project.link.href} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="mr-2 h-4 w-4" />
-                        {project.link.label}
-                    </a>
-                </Button>
-            </div>
-
-          </article>
+            <p className="text-gray-700 leading-relaxed">{project.description}</p>
+          </div>
         </div>
       </main>
-      <Footer />
+
+      {/* --- Key Features Section --- */}
+      <section className="bg-black text-white py-16 md:py-24">
+        <div className="container mx-auto px-4 md:px-8">
+          <h2 className="text-4xl font-bold text-center mb-16 font-headline">
+            Key <span className="text-white/80">Features</span>
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+            <div className="bg-gray-900 p-8 rounded-xl shadow-lg">
+              <ul className="space-y-3 list-disc list-inside text-gray-300 text-sm md:text-base">
+                {project.keyFeatures.left.map((feature, index) => (
+                  <li key={index}>{feature}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="bg-gray-200 text-gray-900 p-8 rounded-xl shadow-lg">
+              <ul className="space-y-3 list-disc list-inside text-sm md:text-base">
+                {project.keyFeatures.right.map((feature, index) => (
+                  <li key={index}>{feature}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
-}
+};
+
+export default ProjectPage;

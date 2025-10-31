@@ -1,43 +1,29 @@
 'use client';
 
-import { personalData, skills } from '@/lib/data';
-import { Badge } from './ui/badge';
 import Image from 'next/image';
+import { personalData } from '@/lib/data';
 
 const AboutSection = () => {
   return (
-    <section id="about" className="container mx-auto py-16 px-4 md:py-24 md:px-6">
-      <div className="grid gap-12 md:grid-cols-1">
-        <div className="space-y-6">
-          <h2 className="font-headline text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-            About Me
-          </h2>
-          <div className="flex items-center gap-4">
+    <section id="about" className="py-16 md:py-24 bg-white">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="w-full max-w-sm mx-auto">
             <Image
-              src="https://picsum.photos/seed/avatar/120/120"
-              alt={personalData.name}
-              width={120}
-              height={120}
-              className="rounded-full border-4 border-primary shadow-lg"
-              data-ai-hint="professional portrait"
+              src="/images/me.svg" 
+              alt="Oumaima Chater"
+              width={400}
+              height={500}
+              className="rounded-xl shadow-lg object-cover w-full h-auto"
             />
-            <div>
-              <h3 className="text-2xl font-bold font-headline">{personalData.name}</h3>
-              <p className="text-muted-foreground">{personalData.title}</p>
-            </div>
           </div>
-          <p className="text-lg text-foreground/80">{personalData.bio}</p>
-          
           <div className="space-y-4">
-            <h4 className="font-headline text-2xl font-bold">Skills</h4>
-            <div className="flex flex-wrap gap-2">
-              {skills.map((skill) => (
-                <Badge key={skill.name} variant="secondary" className="text-base py-1 px-3 flex items-center gap-2">
-                    <skill.icon className="h-4 w-4 text-accent" />
-                    {skill.name}
-                </Badge>
-              ))}
-            </div>
+            <h2 className="text-3xl font-bold font-headline sm:text-4xl md:text-5xl">
+              About Me
+            </h2>
+            <p className="text-base leading-relaxed text-gray-700">
+             {personalData.details}
+            </p>
           </div>
         </div>
       </div>
