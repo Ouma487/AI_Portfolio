@@ -55,7 +55,7 @@ const Contact = () => {
                 <Input
                   type="text"
                   name="website"
-                  placeholder="Your website (If exists)"
+                  placeholder="Your website"
                   className="border border-black rounded-none focus-visible:ring-0 focus-visible:border-black"
                 />
 

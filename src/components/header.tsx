@@ -9,8 +9,10 @@ import { cn } from '@/lib/utils';
 import { Menu, X, Download } from 'lucide-react';
 
 const navLinks = [
-  { name: 'About Me', href: '#about' },
+  
   { name: 'Skills', href: '#skills' },
+  {name: 'Experience', href: '#experience'},
+  { name: 'About Me', href: '#about' },
   { name: 'Projects', href: '#projects' },
   { name: 'Contact Me', href: '#contact' },
 ];
@@ -46,7 +48,7 @@ const Header = () => {
         {/* Left Logo */}
         <Link href="/" className="flex items-center gap-2">
           <Image
-            src="/logos/logo.png"
+            src="/logos/logo_t.png"
             alt="Portfolio Logo"
             width={40}
             height={40}
