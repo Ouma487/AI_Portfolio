@@ -1,17 +1,7 @@
 'use client';
 
+import { aiDomains } from '@/lib/data';
 import { Card } from './ui/card';
-
-const aiDataScienceSkills = [
-  { name: 'Machine Learning' },
-  { name: 'Deep Learning' },
-  { name: 'NLP' },
-  { name: 'Computer Vision' },
-  { name: 'Reinforcement Learning' },
-  { name: 'Probabilities' },
-  { name: 'Statistics' },
-  { name: 'LLMs' },
-];
 
 const AiDataScienceSection = () => {
   return (
@@ -22,16 +12,16 @@ const AiDataScienceSection = () => {
         </h2>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-4xl mx-auto">
-          {aiDataScienceSkills.map((skill) => (
+          {aiDomains.map((domain) => (
             <Card
-              key={skill.name}
+              key={domain}
               className={`flex items-center justify-center text-center transition-all duration-300 hover:shadow-lg hover:scale-105 aspect-square rounded-none font-bold text-lg border border-black ${
-                skill.name === 'Deep Learning'
+                domain === 'Deep Learning'
                   ? 'bg-black text-white'
                   : 'bg-white'
               }`}
             >
-              {skill.name}
+              {domain}
             </Card>
           ))}
         </div>

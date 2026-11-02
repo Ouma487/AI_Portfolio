@@ -31,8 +31,8 @@ const ExperienceSection = () => {
                 <div className="flex items-center gap-4 mb-2 sm:mb-0">
                 {exp.logo && (
                       <Image
-                        src={exp.logo}
-                        alt={`${exp.company} logo`}
+                        src={exp.logo.src}
+                        alt={exp.logoAlt ?? `${exp.company} logo`}
                         width={32}
                         height={32}
                         className="w-8 h-8 object-contain"
@@ -52,7 +52,7 @@ const ExperienceSection = () => {
                       : 'text-gray-400'
                   }`}
                 >
-                  {exp.date}
+                  {exp.period}
                 </p>
               </div>
               <p
@@ -64,7 +64,7 @@ const ExperienceSection = () => {
                     : 'text-gray-400'
                 }`}
               >
-                {exp.description}
+                {exp.summary}
               </p>
             </Card>
           ))}

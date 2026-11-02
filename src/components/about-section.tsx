@@ -10,10 +10,11 @@ const AboutSection = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="w-full max-w-sm mx-auto">
             <Image
-              src="/images/me.svg" 
-              alt="Oumaima Chater"
-              width={400}
-              height={500}
+              src={personalData.portrait.src}
+              alt={personalData.portraitAlt}
+              width={personalData.portrait.width}
+              height={personalData.portrait.height}
+              sizes="(min-width: 768px) 384px, 100vw"
               className="rounded-xl shadow-lg object-cover w-full h-auto"
             />
           </div>
@@ -21,9 +22,11 @@ const AboutSection = () => {
             <h2 className="text-3xl font-bold font-headline sm:text-4xl md:text-5xl">
               About Me
             </h2>
-            <p className="text-base leading-relaxed text-gray-700">
-             {personalData.details}
-            </p>
+            {personalData.about.map((paragraph) => (
+              <p key={paragraph} className="text-base leading-relaxed text-gray-700">
+                {paragraph}
+              </p>
+            ))}
           </div>
         </div>
       </div>
