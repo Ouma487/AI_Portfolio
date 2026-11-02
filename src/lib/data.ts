@@ -447,7 +447,7 @@ export const experience: Experience[] = [
     period: 'Dec 2024 – Dec 2025',
     start: '2024-12',
     end: '2025-12',
-    location: 'Paris, France',
+    location: 'Paris, France (hybrid)',
     employmentType: 'Full-time',
     summary:
       'Building production AI pipelines that combine LLM agents, multimodal retrieval and dynamic prompt generation to automate financial and non-financial content.',
