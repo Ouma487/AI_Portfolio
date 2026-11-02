@@ -197,11 +197,6 @@ function Plate({ all, now }: { all: Span[]; now: number }) {
     ink.line([x(y), AX - 5], [x(y), AX + 5], 10 + i, { roughness: 0.3, disableMultiStroke: true })
   );
 
-  // One marginal note, in the empty top-right corner once study is over:
-  // where the work has been heading.
-  const lastStudyEnd = Math.max(...study.map((s) => s.x1), X0);
-  const note = lastStudyEnd < XNOW - 160 ? { x: XNOW + 36, y: studyTop + BAR } : null;
-
   return (
     <svg
       viewBox={`0 0 ${W} ${H}`}
@@ -306,18 +301,6 @@ function Plate({ all, now }: { all: Span[]; now: number }) {
           </g>
         );
       })}
-
-      {note ? (
-        <text
-          x={note.x}
-          y={note.y}
-          textAnchor="end"
-          fontSize={21}
-          className="fill-accent font-hand"
-        >
-          → into production
-        </text>
-      ) : null}
     </svg>
   );
 }
