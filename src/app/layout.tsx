@@ -1,52 +1,86 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
+import { Archivo, JetBrains_Mono, Newsreader } from 'next/font/google';
 import './globals.css';
 
-import Header from '@/components/header';
-import Footer from '@/components/footer';
-import { Toaster } from '@/components/ui/toaster';
+import SiteHeader from '@/components/site-header';
+import SiteFooter from '@/components/site-footer';
+import { personalData, siteMetadata } from '@/lib/data';
+import { siteUrl } from '@/lib/site';
 import { cn } from '@/lib/utils';
-import { Inter, Poppins } from 'next/font/google';
+
+/* Display: Archivo, a grotesk with a width axis. Set heavy and slightly
+   expanded it gives the posters-and-magazines voice, and it holds up when
+   outlined. */
+const display = Archivo({
+  subsets: ['latin'],
+  axes: ['wdth'],
+  variable: '--font-display',
+  display: 'swap',
+});
+
+/* Text: Newsreader, a serif drawn for reading on screens, with an optical
+   size axis so small captions and large lead paragraphs both look right. */
+const text = Newsreader({
+  subsets: ['latin'],
+  axes: ['opsz'],
+  style: ['normal', 'italic'],
+  variable: '--font-text',
+  display: 'swap',
+});
+
+/* Mono: JetBrains Mono for labels, indices, dates and figures, the
+   "lab notebook" layer of the page. */
+const mono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
-  title: 'AI Engineer Portfolio',
-  description:
-    'Portfolio of an AI Engineer showcasing projects, experience, and skills.',
+  metadataBase: siteUrl,
+  title: {
+    default: siteMetadata.title,
+    template: `%s · ${personalData.name}`,
+  },
+  description: siteMetadata.description,
+  authors: [{ name: personalData.name }],
+  creator: personalData.name,
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'website',
+    locale: 'en_GB',
+    url: '/',
+    siteName: personalData.name,
+    title: siteMetadata.title,
+    description: siteMetadata.description,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteMetadata.title,
+    description: siteMetadata.description,
+  },
 };
 
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-});
+export const viewport: Viewport = {
+  themeColor: '#ffffff',
+  colorScheme: 'light',
+};
 
-const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-poppins',
-});
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="!scroll-smooth">
-      <body
-        className={cn(
-          'antialiased bg-background text-foreground font-body',
-          inter.variable,
-          poppins.variable
-        )}
-      >
-        {/* ✅ Header appears on all pages */}
-        <Header />
-
-        <main className="flex-grow">{children}</main>
-
-        {/* ✅ Footer also appears on all pages */}
-        <Footer />
-
-        <Toaster />
+    <html lang="en" className={cn(display.variable, text.variable, mono.variable)}>
+      <body>
+        <a
+          href="#main"
+          className="label sr-only z-[60] bg-ink px-4 py-3 text-paper focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+        >
+          Skip to content
+        </a>
+        <SiteHeader />
+        <main id="main" tabIndex={-1} className="focus:outline-none">
+          {children}
+        </main>
+        <SiteFooter />
       </body>
     </html>
   );

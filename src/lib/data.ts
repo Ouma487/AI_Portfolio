@@ -201,11 +201,13 @@ export const siteMetadata = {
     'Portfolio of Oumaima Chater, AI engineer in France: predictive maintenance, interpretable models, RAG and LLM pipelines, reinforcement learning and multi-agent systems.',
 };
 
+/** In-page sections, in the order they appear on the home page. The UI numbers sections from this order. */
 export const navigation: NavLink[] = [
-  { label: 'Skills', href: '#skills' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'About', href: '#about' },
   { label: 'Projects', href: '#projects' },
+  { label: 'Experience', href: '#experience' },
+  { label: 'Education', href: '#education' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'About', href: '#about' },
   { label: 'Contact', href: '#contact' },
 ];
 
