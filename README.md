@@ -7,8 +7,8 @@ and has a contact form that emails messages straight to her inbox.
 ## Stack
 
 - **[Next.js 15](https://nextjs.org)** (App Router) with **React 18** and **TypeScript**
-- **[Tailwind CSS](https://tailwindcss.com)** with a few **[shadcn/ui](https://ui.shadcn.com)** components (Radix UI primitives)
-- **[lucide-react](https://lucide.dev)** icons
+- **[Tailwind CSS](https://tailwindcss.com)** with a small token system (see `docs/notes/frontend.md`)
+- **next/font** with Archivo, Newsreader and JetBrains Mono
 - **Server Actions** + **[zod](https://zod.dev)** validation for the contact form
 - **[Resend](https://resend.com)** to deliver contact form email
 
@@ -38,16 +38,23 @@ shows a friendly error and logs the missing variable on the server otherwise).
 ```
 src/
   app/
-    layout.tsx            Root layout: fonts, header, footer
-    page.tsx              Home page (all sections)
-    projects/[id]/        Project detail pages
+    layout.tsx            Root layout: fonts, metadata, skip link, header, footer
+    page.tsx              Home page (sections in `navigation` order)
+    projects/[slug]/      Project case-study pages + their OG images
+    opengraph-image.tsx   Generated social preview image (next/og)
+    sitemap.ts, robots.ts sitemap.xml and robots.txt
     actions.ts            Contact form Server Action (validation + Resend)
-    globals.css           Tailwind layers and theme variables
-  components/             Page sections (header, skills, experience, contact, ...)
-    ui/                   shadcn/ui primitives (button, card, input, ...)
-  hooks/                  React hooks (toast)
+    globals.css           Design tokens (type scale, grid, palette) and motion
+  components/
+    sections/             Home page sections (hero, projects, experience, ...)
+    contact.tsx           Contact section and form (client component)
+    site-header.tsx       Sticky nav, active section, mobile menu
+    site-footer.tsx       Footer
+    section-header.tsx    The shared "01 — Label" section header
   lib/
     data.ts               All site content: bio, projects, experience, skills
+    site.ts               Derived values: site URL, sorted experience, section numbers
+    og.tsx                Shared renderer for Open Graph images
     utils.ts              cn() class-name helper
 public/                   Images, icons, logos and the CV PDF
 docs/

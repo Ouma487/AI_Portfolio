@@ -1,74 +1,218 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap');
-
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* -------------------------------------------------------------------------- */
+/*                                   Tokens                                   */
+/* -------------------------------------------------------------------------- */
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 240 100% 68%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 271 100% 68%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 240 100% 68%;
-    --radius: 0.5rem;
-  }
-  .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 240 100% 68%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 271 100% 68%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 240 100% 68%;
-  }
-}
+    /* Palette: ink, paper and one neutral grey. Stored as RGB channels so
+       Tailwind can apply opacity (e.g. border-ink/15 for minor rules). */
+    --ink: 10 10 10;
+    --paper: 255 255 255;
+    --mute: 92 92 92; /* 6.9:1 on white, passes WCAG AA for body text */
 
-@layer base {
+    /* Fluid type scale, 360px -> 1440px viewport.
+       Ratio 1.2 (minor third) on phones, 1.333 (perfect fourth) on desktop. */
+    --step-0: clamp(1rem, 0.958rem + 0.185vw, 1.125rem); /* 16 -> 18 */
+    --step-1: clamp(1.2rem, 1.1rem + 0.444vw, 1.5rem); /* 19 -> 24 */
+    --step-2: clamp(1.44rem, 1.254rem + 0.828vw, 2rem); /* 23 -> 32 */
+    --step-3: clamp(1.728rem, 1.416rem + 1.388vw, 2.665rem); /* 28 -> 43 */
+    --step-4: clamp(2.074rem, 1.581rem + 2.19vw, 3.552rem); /* 33 -> 57 */
+    --step-5: clamp(2.488rem, 1.739rem + 3.328vw, 4.735rem); /* 40 -> 76 */
+    --step-display: clamp(3.375rem, 0.667rem + 12.037vw, 11.5rem); /* 54 -> 184 */
+
+    /* 12-column grid */
+    --margin: clamp(1.25rem, 0.5rem + 3.4vw, 4rem); /* 20 -> 64 */
+    --gutter: clamp(1rem, 0.75rem + 1vw, 1.5rem); /* 16 -> 24 */
+    --space-section: clamp(5rem, 3rem + 8vw, 10rem); /* 80 -> 160 */
+    --header-h: 4rem;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--header-h) + 1rem);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
   * {
-    @apply border-border;
+    border-color: rgb(var(--ink));
   }
+
   body {
-    @apply bg-background text-foreground;
-    font-family: 'Sora', sans-serif;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0.02em;
+    @apply bg-paper font-serif text-step-0 text-ink antialiased;
+    font-optical-sizing: auto;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: rgb(var(--ink));
+    color: rgb(var(--paper));
+  }
+
+  /* One focus style everywhere: a 2px ink outline, offset so it never hides
+     the element. On inverted surfaces "ink" is white, so it adapts. */
+  :focus-visible {
+    outline: 2px solid rgb(var(--ink));
+    outline-offset: 3px;
+  }
+
+  /* Swap the tokens: inside .inverted, "ink" is white and "paper" is black.
+     Every component keeps using text-ink / bg-paper / border-ink and just
+     works on a black surface. */
+  .inverted {
+    --ink: 255 255 255;
+    --paper: 10 10 10;
+    --mute: 168 168 168; /* 8.4:1 on the black */
   }
 }
 
+/* -------------------------------------------------------------------------- */
+/*                                 Components                                 */
+/* -------------------------------------------------------------------------- */
+
+@layer components {
+  /* The frame: max width + side margins. Every section aligns to it. */
+  .frame {
+    @apply mx-auto w-full max-w-frame px-margin;
+  }
+
+  /* 12 columns from md up; a single column on phones. */
+  .grid-12 {
+    @apply grid grid-cols-1 gap-x-gutter md:grid-cols-12;
+  }
+
+  /* Mono label: indices, metadata, captions. */
+  .label {
+    @apply font-mono text-step--1 font-medium uppercase tracking-[0.08em];
+  }
+
+  .rule {
+    @apply border-t border-ink;
+  }
+
+  /* Underlined link that thickens on hover. */
+  .link {
+    @apply underline decoration-1 underline-offset-[0.2em] transition-[text-decoration-thickness] duration-200;
+  }
+  .link:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  /* Hit area of at least 44 x 44px for small text links (WCAG 2.5.5). */
+  .hit {
+    @apply inline-flex min-h-11 items-center;
+  }
+
+  .display {
+    @apply font-display font-extrabold tracking-[-0.035em];
+    font-stretch: 112%;
+  }
+}
+
+/* The outlined display treatment from the Figma: hollow letters, ink stroke.
+   The stroke scales with the font size (0.022em) and stays between 1px and 4px. */
 .text-outline {
-  font-weight: 800;
-  -webkit-text-stroke: 4px #000;   /* black outline */
-  -webkit-text-fill-color: #fff;   /* white fill */
-  paint-order: stroke fill;
-  text-rendering: geometricPrecision;
+  color: rgb(var(--ink));
+}
+@supports (-webkit-text-stroke: 1px black) {
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: clamp(1px, 0.022em, 4px) rgb(var(--ink));
+  }
+}
+
+/* Images are shown in greyscale to stay inside the black-and-white palette. */
+.mono-img {
+  filter: grayscale(1) contrast(1.05);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Motion                                   */
+/* -------------------------------------------------------------------------- */
+
+/* Everything below only runs for people who haven't asked for less motion. */
+@media (prefers-reduced-motion: no-preference) {
+  /* Reveal on scroll with a CSS scroll-driven animation: no JavaScript.
+     Browsers without animation-timeline simply show the content. */
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+
+  .pulse {
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+/* Belt and braces: cancel any transition if reduced motion is requested. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                          Project index: hover reveal                       */
+/* -------------------------------------------------------------------------- */
+
+/* Only where hovering is real (mouse/trackpad) and there's room: the image
+   floats over the stack column and is unveiled with a clip-path wipe.
+   Everywhere else the thumbnail stays in the flow as a static image. */
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  /* Two classes of specificity so this beats the md:col-* utilities that
+     place the static thumbnail for touch screens. */
+  .project-row > .project-thumb {
+    position: absolute;
+    z-index: 10;
+    grid-column: 8 / span 3;
+    grid-row: 1;
+    top: 50%;
+    transform: translateY(-50%) rotate(-1.5deg);
+    clip-path: inset(50% 0 50% 0);
+    transition: clip-path 450ms cubic-bezier(0.2, 0.7, 0.1, 1);
+    border: 1px solid rgb(var(--ink));
+  }
+  .project-row:hover .project-thumb,
+  .project-row:focus-visible .project-thumb {
+    clip-path: inset(0 0 0 0);
+  }
+  .project-row:hover .project-stack,
+  .project-row:focus-visible .project-stack {
+    opacity: 0;
+  }
+  .project-stack {
+    transition: opacity 200ms;
+  }
 }
