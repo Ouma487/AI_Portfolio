@@ -5,3 +5,24 @@ runConfig:
   # Increase this value if you'd like to automatically spin up
   # more instances in response to increased traffic.
   maxInstances: 1
+
+# Environment variables and secrets used by the contact form
+# (src/app/actions.ts). See docs/DEPLOYMENT.md for the full setup.
+env:
+  # The Resend API key is a secret: its value lives in Cloud Secret Manager,
+  # not in this file. Create it once with:
+  #   firebase apphosting:secrets:set RESEND_API_KEY
+  # (the CLI also offers to grant your backend access to the secret).
+  - variable: RESEND_API_KEY
+    secret: RESEND_API_KEY
+    availability:
+      - RUNTIME
+
+  # The inbox that receives contact messages. This address is already shown
+  # publicly on the site, so a plain value is fine. To keep it out of the repo
+  # instead, replace `value:` with `secret: CONTACT_EMAIL` and create that
+  # secret the same way as above.
+  - variable: CONTACT_EMAIL
+    value: chtr.oumaima@gmail.com
+    availability:
+      - RUNTIME

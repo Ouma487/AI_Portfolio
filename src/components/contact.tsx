@@ -31,6 +31,15 @@ const Contact = () => {
             
             ) : (
               <form action={formAction} className="space-y-4">
+                {/* Honeypot: hidden from people, but bots that fill every field fill this one. */}
+                <div
+                  aria-hidden="true"
+                  style={{ position: 'absolute', left: '-10000px', width: '1px', height: '1px', overflow: 'hidden' }}
+                >
+                  <label htmlFor="company">Company</label>
+                  <input type="text" id="company" name="company" tabIndex={-1} autoComplete="off" />
+                </div>
+
                 <Input
                   type="text"
                   name="name"
@@ -59,6 +68,9 @@ const Contact = () => {
                   placeholder="Your website"
                   className="border border-black rounded-none focus-visible:ring-0 focus-visible:border-black"
                 />
+                {state.errors?.website && (
+                  <p className="text-red-500 text-sm">{state.errors.website.join(', ')}</p>
+                )}
 
                 <Textarea
                   name="message"
@@ -69,6 +81,10 @@ const Contact = () => {
                 />
                 {state.errors?.message && (
                   <p className="text-red-500 text-sm">{state.errors.message.join(', ')}</p>
+                )}
+
+                {!state.success && state.message && !state.errors && (
+                  <p className="text-red-500 text-sm" role="alert">{state.message}</p>
                 )}
 
                 <div className="flex items-center gap-3 pt-2">
