@@ -502,6 +502,9 @@ export const education: Education[] = [
       'Computer Vision',
       'Reinforcement Learning',
       'Game Theory',
+      'Particle Physics',
+      'Cosmology',
+      'Cryptography',
     ],
     highlights: [
       'Prix de l’innovation Dzung Tran for the Genvia predictive maintenance project.',
