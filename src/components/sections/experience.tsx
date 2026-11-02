@@ -69,7 +69,7 @@ export default function Experience() {
                 <div className="md:col-span-3">
                   {ongoing && i === 0 ? (
                     <p className="hand mb-6" aria-hidden="true">
-                      calibrated ✓ cf. fig. 1
+                      calibrated ✓
                     </p>
                   ) : null}
                   {job.stack?.length ? (

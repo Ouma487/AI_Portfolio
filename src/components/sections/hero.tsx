@@ -66,11 +66,6 @@ export default function Hero() {
           <div className="plate border-y border-ink/15 px-4 pb-4 pt-6">
             <CalibrationSketch />
           </div>
-          <figcaption className="mt-3 text-step--1 text-graphite">
-            <span className="label mr-2 text-ink">Fig. 1</span>
-            Calibration, schematic. A forecast is calibrated when the events it calls 70% likely
-            happen about 70% of the time.
-          </figcaption>
         </figure>
       </div>
     </section>

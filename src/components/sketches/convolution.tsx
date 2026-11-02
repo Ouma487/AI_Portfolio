@@ -88,11 +88,6 @@ export default function ConvolutionSketch() {
           stride 1, no padding
         </text>
       </svg>
-      <figcaption className="mt-3 text-step--1 text-graphite">
-        <span className="label mr-2 text-ink">Fig. 3</span>
-        A convolution, the first operation of most vision models: each window of the image
-        becomes one value of the feature map.
-      </figcaption>
     </figure>
   );
 }

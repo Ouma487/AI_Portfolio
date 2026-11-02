@@ -271,11 +271,6 @@ export default function RouteMap() {
           </li>
         ))}
       </ol>
-      <figcaption className="border-t border-ink/15 px-4 py-3 text-step--1 text-graphite lg:px-8">
-        <span className="label mr-2 text-ink">Fig. 2</span>
-        The route so far, from engineering school to production forecasting.
-        <span className="hidden md:inline"> Drawn to scale; grid in degrees.</span>
-      </figcaption>
     </figure>
   );
 }
