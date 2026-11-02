@@ -423,11 +423,9 @@ export const experience: Experience[] = [
       'Probabilistic forecasting and quantitative sports models, from research and validation through to production deployment and live monitoring.',
     highlights: [
       'Built a production football forecasting engine from scratch: an Elo rating system with a literature-derived update rule, Poisson goal models and Dixon-Coles low-score correction for calibrated draw probabilities, covering tens of thousands of matches across dozens of leagues.',
-      'Tuned the engine’s parameters with Optuna and shipped it as a containerised AWS Lambda service, with its infrastructure defined in Terraform.',
       'Led the basketball player-props pipeline (NBA and EuroLeague): a two-stage model predicting minutes and then the stat, with edge measured against bookmaker-implied probabilities and validated on a strict tune / validation / single-use live temporal split with bootstrap confidence intervals.',
-      'Treated negative results as findings: rejected Kelly staking after it produced unacceptable drawdowns at the current calibration quality, and showed that tracking-data signal on assists disappeared against the market because rolling-variance estimates underestimate volatility for high-usage players.',
-      'Own the production rollout of the first strategy: daily runs, a settlement system recording every candidate (not just placed bets) with ROI, CLV and bootstrap metrics, a venue-agnostic fills table, live odds ingestion into the lakehouse, and stop/kill thresholds fixed before launch.',
-      'Contributed to an S3 / Iceberg / Glue basketball lakehouse fed by league APIs (authoring and reviewing ingestion PRs), and provided technical oversight of a prediction-market strategy, identifying in-sample artifacts that inflated its early backtest returns.',
+      'Took the first strategy from backtest to production as weeks of solo, end-to-end work, owning the ML, data engineering and software engineering: daily model runs and monitoring, a settlement system that records every candidate (not just placed bets) with ROI, CLV and bootstrap metrics, a venue-agnostic fills table, live odds ingestion into the lakehouse, and stop/kill thresholds fixed before launch.',
+      'Built data ingestion pipelines for an S3 / Iceberg / Glue basketball lakehouse fed by league APIs, and provided technical oversight of a prediction-market strategy, identifying in-sample artifacts that inflated its early backtest returns.',
     ],
     stack: [
       'Python',
