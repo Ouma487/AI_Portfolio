@@ -430,9 +430,8 @@ export const experience: Experience[] = [
     stack: [
       'Python',
       'Machine learning',
-      'LightGBM',
       'Statistics',
-      'Optuna',
+      'Hyperparameter tuning',
       'Isotonic calibration',
       'Bootstrap / Monte Carlo',
       'Pydantic',
