@@ -301,7 +301,7 @@ export const projects: Project[] = [
       '90.8% accuracy across multi-site datasets.',
       'Failures can be predicted from early voltage signals, removing the need for costly endurance tests.',
       'Awarded the Prix de l’innovation Dzung Tran, CentraleSupélec’s top computer science innovation of the year.',
-      'Extended into a co-authored paper, “Interpretable Domain-Adaptive Deep Learning for Noisy Time-Series Failure Prediction”, submitted to AISTATS 2026.',
+      'Extended into a co-authored research paper, “Interpretable Domain-Adaptive Deep Learning for Noisy Time-Series Failure Prediction”.',
     ],
     highlights: [{ label: 'Accuracy across sites', value: '90.8%' }],
     stack: ['Python', 'PyTorch', 'VAE', 'CNN', 'Domain adaptation', 'Time series'],
