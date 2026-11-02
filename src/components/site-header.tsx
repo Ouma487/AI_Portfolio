@@ -106,7 +106,9 @@ export default function SiteHeader() {
           className="hit gap-2 font-display text-step-1 leading-none"
           aria-label={`${personalData.name}, home`}
         >
-          <span aria-hidden="true">{personalData.name}</span>
+          <span aria-hidden="true" className="tracking-[0.06em]">
+            {personalData.initials}
+          </span>
         </Link>
 
         <nav aria-label="Main" className="hidden lg:block">
