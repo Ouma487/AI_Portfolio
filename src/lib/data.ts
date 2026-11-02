@@ -164,11 +164,11 @@ export const personalData: PersonalData = {
   initials: 'OC',
   title: 'AI Engineer',
   headline:
-    'AI engineer building ML pipelines, interpretable models and LLM systems that hold up in production.',
-  bio: 'I’m an AI engineer working on predictive modeling, time-series analysis, deep learning and LLM-based systems. I’ve built interpretable diagnostic models for the automotive industry, predictive maintenance pipelines using generative models, and multi-agent simulations.',
+    'AI engineer building calibrated forecasting models, ML pipelines and LLM systems that hold up in production.',
+  bio: 'I’m an AI engineer and data scientist working on probabilistic forecasting, time-series analysis, deep learning and LLM-based systems. I’ve built sports forecasting engines and quantitative models now running in production, interpretable diagnostic models for the automotive industry, and predictive maintenance pipelines using generative models.',
   about: [
     'I trained as an engineer at CentraleSupélec, specialising in computer vision and AI, with a grounding in statistics, optimization and machine learning.',
-    'Since then I’ve worked on predictive maintenance, interpretable defect classification at Renault, and multimodal retrieval and LLM-driven content automation at Libertify. My toolkit is Python, PyTorch, TensorFlow and SQL, deployed on GCP and AWS.',
+    'Since then I’ve worked on interpretable defect classification at Renault and on multimodal retrieval and LLM-driven content automation at Libertify. Since January 2026 I’ve been at Kairos Research AI, building calibrated forecasting models and taking them from backtest to live production. My toolkit is Python, PyTorch, LightGBM and SQL, deployed on AWS and GCP.',
     'I like taking a messy technical problem, finding the model that actually fits it, and shipping it as a pipeline other people can rely on. Outside work, I write about AI and data.',
   ],
   location: 'France',
@@ -411,10 +411,40 @@ export const getProjectBySlug = (slug: string): Project | undefined =>
 
 export const experience: Experience[] = [
   {
+    company: 'Kairos Research AI',
+    role: 'AI Engineer / Data Scientist',
+    period: 'Jan 2026 – Present',
+    start: '2026-01',
+    location: 'Paris, France (hybrid)',
+    employmentType: 'Full-time',
+    summary:
+      'Probabilistic forecasting and quantitative sports models, from research and validation through to production deployment and live monitoring.',
+    highlights: [
+      'Built a production football forecasting engine from scratch: an Elo rating system with a literature-derived update rule, Poisson goal models and Dixon-Coles low-score correction for calibrated draw probabilities, covering tens of thousands of matches across dozens of leagues.',
+      'Fixed production rating bugs at the data layer: season keys compared as strings across "YYYY-YYYY" and "YYYY" formats, and same-name clubs from different leagues sharing ratings. Re-keyed ratings on stable team IDs and parsed seasons numerically; re-tuned parameters with Optuna and shipped it as a containerised AWS Lambda service with Terraform.',
+      'Led the basketball player-props pipeline (NBA and EuroLeague): a two-stage model predicting minutes and then the stat, with edge measured against bookmaker-implied probabilities and validated on a strict tune / validation / single-use live temporal split with bootstrap confidence intervals.',
+      'Treated negative results as findings: rejected Kelly staking after it produced unacceptable drawdowns at the current calibration quality, and showed that tracking-data signal on assists disappeared against the market because rolling-variance estimates underestimate volatility for high-usage players.',
+      'Own the production rollout of the first strategy: daily runs, a settlement system recording every candidate (not just placed bets) with ROI, CLV and bootstrap metrics, a venue-agnostic fills table, live odds ingestion into the lakehouse, and stop/kill thresholds fixed before launch.',
+      'Contributed to an S3 / Iceberg / Glue basketball lakehouse fed by league APIs (authoring and reviewing ingestion PRs), and provided technical oversight of a prediction-market strategy, identifying in-sample artifacts that inflated its early backtest returns.',
+    ],
+    stack: [
+      'Python',
+      'LightGBM',
+      'Optuna',
+      'Isotonic calibration',
+      'Bootstrap / Monte Carlo',
+      'AWS (Lambda, ECR, S3, Glue)',
+      'Apache Iceberg',
+      'Docker',
+      'Terraform',
+    ],
+  },
+  {
     company: 'Libertify',
     role: 'AI Engineer',
-    period: 'Dec 2024 – Present',
+    period: 'Dec 2024 – Dec 2025',
     start: '2024-12',
+    end: '2025-12',
     location: 'Paris, France',
     employmentType: 'Full-time',
     summary:
