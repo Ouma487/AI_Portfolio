@@ -98,7 +98,8 @@ export default {
         '2': '2px',
         '3': '3px',
       },
-      textStrokeColor: theme => theme('colors'),
+      textStrokeColor: ({ theme }: { theme: (path: string) => unknown }) =>
+        theme('colors'),
     },
   },
   plugins: [require('tailwindcss-animate'),require('tailwindcss-text-fill-stroke')],
