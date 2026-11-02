@@ -162,7 +162,7 @@ const EMAIL = 'chtr.oumaima@gmail.com';
 export const personalData: PersonalData = {
   name: 'Oumaima Chater',
   initials: 'OC',
-  title: 'AI Engineer',
+  title: 'AI Engineer & Data Scientist',
   headline:
     'AI engineer building calibrated forecasting models, ML pipelines and LLM systems that hold up in production.',
   bio: 'I’m an AI engineer and data scientist working on probabilistic forecasting, time-series analysis, deep learning and LLM-based systems. I’ve built sports forecasting engines and quantitative models now running in production, interpretable diagnostic models for the automotive industry, and predictive maintenance pipelines using generative models.',
