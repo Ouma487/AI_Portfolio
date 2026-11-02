@@ -40,6 +40,25 @@ export const ink = {
     toD(generator.linearPath(points, { ...pen, seed, ...options })),
   ellipse: (cx: number, cy: number, w: number, h: number, seed: number, options: Options = {}) =>
     toD(generator.ellipse(cx, cy, w, h, { ...pen, seed, ...options })),
+  /**
+   * Only the hachure (diagonal pen hatching) that fills a rectangle, without
+   * its outline, so the caller can draw an outline of its own (open-ended
+   * for a period that has not finished yet).
+   */
+  hatch: (x: number, y: number, w: number, h: number, seed: number, options: Options = {}) =>
+    toD(
+      generator.rectangle(x, y, w, h, {
+        ...pen,
+        seed,
+        stroke: 'none',
+        fill: 'currentColor',
+        fillStyle: 'hachure',
+        hachureGap: 3.4,
+        hachureAngle: -50,
+        fillWeight: 0.8,
+        ...options,
+      })
+    ),
 };
 
 /** Sample a function into points, for curves defined by an equation. */
