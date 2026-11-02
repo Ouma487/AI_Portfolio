@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Linkedin, Github, Mail } from 'lucide-react';
 import { Button } from './ui/button';
+import { getSocial, personalData } from '@/lib/data';
 
 const initialState: FormState = {
   message: '',
@@ -81,7 +82,7 @@ const Contact = () => {
                       asChild
                     >
                       <a
-                        href="https://linkedin.com/in/oumaimachater"
+                        href={getSocial('linkedin')?.url}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -95,7 +96,7 @@ const Contact = () => {
                       asChild
                     >
                       <a
-                        href="https://github.com/Ouma487"
+                        href={getSocial('github')?.url}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -108,7 +109,7 @@ const Contact = () => {
                       className="border border-black rounded-none"
                       asChild
                     >
-                      <a href="mailto:chtr.oumaima@gmail.com">
+                      <a href={getSocial('email')?.url}>
                         <Mail className="h-5 w-5 text-black" />
                       </a>
                     </Button>
@@ -126,7 +127,7 @@ const Contact = () => {
               Something special
             </h2>
             <p className="mt-4 text-lg font-medium text-black">
-              chtr.oumaima@gmail.com
+              {personalData.email}
             </p>
           </div>
         </div>

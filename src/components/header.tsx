@@ -48,7 +48,7 @@ const Header = () => {
         {/* Left Logo */}
         <Link href="/" className="flex items-center gap-2">
           <Image
-            src="/logos/logo_t.png"
+            src={personalData.logo.src}
             alt="Portfolio Logo"
             width={40}
             height={40}
@@ -78,7 +78,7 @@ const Header = () => {
             asChild
             className="bg-black text-white hover:bg-gray-900 flex items-center gap-2"
           >
-            <a href="/pdfs/CV_Oumaima_Chater (2).pdf" download>
+            <a href={personalData.resumeUrl} download>
               Resume
               <Download className="h-4 w-4" />
             </a>

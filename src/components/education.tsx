@@ -46,7 +46,7 @@ const EducationSection = () => {
                     index === 0 ? 'text-gray-500' : 'text-gray-300'
                   }`}
                 >
-                  {edu.date}
+                  {edu.period}
                 </p>
               </div>
 
@@ -55,7 +55,7 @@ const EducationSection = () => {
                   index === 0 ? 'text-gray-300' : 'text-gray-200'
                 }`}
               >
-                {edu.description}
+                {edu.summary ?? edu.coursework?.join(' · ')}
               </p>
             </Card>
           ))}

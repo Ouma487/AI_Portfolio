@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { personalData } from "@/lib/data";
 
 const Footer = () => {
   return (
@@ -7,7 +8,7 @@ const Footer = () => {
         {/* Left side: logo + title */}
         <div className="flex items-center gap-2">
         <Image
-        src="/logos/logo_t.png"
+        src={personalData.logo.src}
         alt="Logo"
         width={40}
         height={40}

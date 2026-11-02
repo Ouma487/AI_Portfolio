@@ -4,7 +4,7 @@ import ProjectsSection from '@/components/projects-section';
 import ExperienceSection from '@/components/experience-section';
 import Contact from '@/components/contact';
 
-import { personalData } from '@/lib/data';
+import { getSocial, personalData } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -52,7 +52,7 @@ function HeroSection() {
           </h1>
 
 
-            <p>Based In <span className="font-extrabold text-black">France.</span></p>
+            <p>Based In <span className="font-extrabold text-black">{personalData.location}.</span></p>
           </div>
 
           <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
@@ -62,23 +62,25 @@ function HeroSection() {
           {/* Social Icons */}
           <div className="flex gap-4 pt-2">
             <a
-              href="https://www.linkedin.com/in/oumaima-chater/"
+              href={getSocial('linkedin')?.url}
               target="_blank"
+              rel="noopener noreferrer"
               className="bg-black text-white p-3 rounded"
               aria-label="LinkedIn"
             >
               <Linkedin className="w-5 h-5" />
             </a>
             <a
-              href="https://github.com/Ouma487"
+              href={getSocial('github')?.url}
               target="_blank"
+              rel="noopener noreferrer"
               className="border border-black p-3 rounded"
               aria-label="GitHub"
             >
               <Github className="w-5 h-5" />
             </a>
             <a
-              href="mailto:chtr.oumaima@gmail.com"
+              href={getSocial('email')?.url}
               className="border border-black p-3 rounded"
               aria-label="Email"
             >
@@ -90,10 +92,10 @@ function HeroSection() {
         {/* Right Column: Illustration */}
         <div className="w-full max-w-md mx-auto">
           <Image
-            src="/images/girl banner 1.svg"
-            alt="Hero illustration"
-            width={500}
-            height={400}
+            src={personalData.heroImage.src}
+            alt={personalData.heroImageAlt}
+            width={personalData.heroImage.width}
+            height={personalData.heroImage.height}
             className="w-full h-auto object-contain"
             priority
           />
