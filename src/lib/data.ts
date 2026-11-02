@@ -459,7 +459,7 @@ export const experience: Experience[] = [
       'Built an end-to-end pipeline that turns scripts into production-ready visuals with generative image models.',
       'Set up prompt evaluation frameworks to keep generated content factually accurate at scale.',
     ],
-    stack: ['Vertex AI', 'AWS Lambda', 'RAG', 'LLM agents', 'Generative image models'],
+    stack: ['Python', 'GCP', 'Vertex AI', 'AWS Lambda', 'RAG', 'LLM agents', 'Generative image models'],
     logo: { src: '/logos/libertify.webp', width: 73, height: 97 },
     logoAlt: 'Libertify logo',
   },
