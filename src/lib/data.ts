@@ -167,7 +167,7 @@ export const personalData: PersonalData = {
     'AI engineer building calibrated forecasting models, ML pipelines and LLM systems that hold up in production.',
   bio: 'I’m an AI engineer and data scientist working on probabilistic forecasting, time-series analysis, deep learning and LLM-based systems. I’ve built sports forecasting engines and quantitative models now running in production, interpretable diagnostic models for the automotive industry, and predictive maintenance pipelines using generative models.',
   about: [
-    'I trained as an engineer at CentraleSupélec, specialising in computer vision and AI, with a grounding in statistics, optimization and machine learning.',
+    'I trained as an engineer at CentraleSupélec, specialising in artificial intelligence, with a grounding in statistics, optimization and machine learning.',
     'Since then I’ve worked on interpretable defect classification at Renault and on multimodal retrieval and LLM-driven content automation at Libertify. Since January 2026 I’ve been at Kairos Research AI, building calibrated forecasting models and taking them from backtest to live production. My toolkit is Python, PyTorch, LightGBM and SQL, deployed on AWS and GCP.',
     'I like taking a messy technical problem, finding the model that actually fits it, and shipping it as a pipeline other people can rely on. Outside work, I play story-driven video games, read, and keep learning about physics, mathematics and the universe through books and podcasts.',
   ],
@@ -292,8 +292,8 @@ export const projects: Project[] = [
       'Genvia, a consortium of CEA, SLB, Vinci, Vicat and the Occitanie region, needed to know which electrolyzer layers would fail. Finding out meant running costly endurance tests. The data came from several sites, so a model trained on one had to keep working on the others despite domain shift.',
     approach: [
       'Detrended the multi-layer voltage time series to isolate the signal that matters.',
-      'Encoded each signal as 2D images using Gramian Angular Fields and Markov Transition Fields.',
-      'Trained a hybrid CNN–VAE that combines supervised anomaly detection, unsupervised reconstruction and domain adaptation.',
+      'Encoded each signal as 2D images using Gramian Angular Fields (GASF/GADF) and Markov Transition Fields.',
+      'Designed domain-adaptive VAEs with a custom encoder/decoder and a KL-weighted loss, combined with a CNN for supervised anomaly detection, unsupervised reconstruction and domain adaptation.',
       'Added counterfactual-based visualizations so engineers can see why a layer was flagged.',
       'Automated manufacturing traceability by converting Excel logs into structured JSON orders, ready for a future knowledge graph.',
     ],
@@ -301,6 +301,7 @@ export const projects: Project[] = [
       '90.8% accuracy across multi-site datasets.',
       'Failures can be predicted from early voltage signals, removing the need for costly endurance tests.',
       'Awarded the Prix de l’innovation Dzung Tran, CentraleSupélec’s top computer science innovation of the year.',
+      'Extended into a co-authored paper, “Interpretable Domain-Adaptive Deep Learning for Noisy Time-Series Failure Prediction”, submitted to AISTATS 2026.',
     ],
     highlights: [{ label: 'Accuracy across sites', value: '90.8%' }],
     stack: ['Python', 'PyTorch', 'VAE', 'CNN', 'Domain adaptation', 'Time series'],
@@ -453,18 +454,18 @@ export const experience: Experience[] = [
     summary:
       'Building production AI pipelines that combine LLM agents, multimodal retrieval and dynamic prompt generation to automate financial and non-financial content.',
     highlights: [
-      'Built RAG pipelines for documents and images on Vertex AI and AWS Lambda, adding text and image embeddings to retrieval.',
-      'Developed AI agents for news classification and video script generation, speeding up editorial throughput.',
-      'Built an end-to-end pipeline that turns scripts into production-ready visuals with generative image models.',
+      'Built production RAG pipelines and optimised embedding retrieval for cross-language semantic search over documents and images.',
+      'Developed prompt-based LLM agents for news classification and video script generation, deployed on Vertex AI and AWS Lambda.',
+      'Built a multimodal image retrieval system and deployed text-to-image diffusion pipelines (Imagen on Vertex AI) that generate video backgrounds automatically, at scale.',
       'Set up prompt evaluation frameworks to keep generated content factually accurate at scale.',
     ],
-    stack: ['Python', 'GCP', 'Vertex AI', 'AWS Lambda', 'RAG', 'LLM agents', 'Generative image models'],
+    stack: ['Python', 'GCP', 'Vertex AI', 'AWS Lambda', 'RAG', 'Embeddings', 'LLM agents', 'Diffusion models (Imagen)'],
     logo: { src: '/logos/libertify.webp', width: 73, height: 97 },
     logoAlt: 'Libertify logo',
   },
   {
     company: 'Renault',
-    role: 'AI & Data Mining Intern',
+    role: 'AI Engineer Intern',
     period: 'May 2024 – Oct 2024',
     start: '2024-05',
     end: '2024-10',
@@ -473,12 +474,11 @@ export const experience: Experience[] = [
     summary:
       'Predictive modeling and document intelligence for quality control and procurement.',
     highlights: [
-      'Designed interpretable models that detect vehicle faults from diagnostic codes, with resampling strategies tailored to class imbalance.',
-      'Automated the comparison of tender (RFP) documents using multimodal LLMs and computer vision.',
-      'Contributed to predictive maintenance work and annotated datasets for model training.',
-      'Worked with risk and business teams to align analytics output with operational KPIs.',
+      'Fine-tuned transformer models for document understanding and applied YOLO layout detection to segment heterogeneous scanned PDFs, automating the structural comparison of procurement (RFP) responses.',
+      'Built interpretable fault-detection models with XGBoost and SHAP feature attribution, using SMOTE to handle class imbalance in predictive maintenance pipelines.',
+      'Annotated training datasets and worked with risk and business teams to align analytics output with operational KPIs.',
     ],
-    stack: ['Python', 'GCP', 'NLP', 'Computer vision', 'Multimodal LLMs'],
+    stack: ['Python', 'GCP', 'Transformers', 'YOLO', 'XGBoost', 'SHAP', 'Multimodal LLMs'],
     logo: { src: '/logos/renault.webp', width: 98, height: 128 },
     logoAlt: 'Renault logo',
   },
@@ -491,7 +491,7 @@ export const experience: Experience[] = [
 export const education: Education[] = [
   {
     institution: 'CentraleSupélec',
-    degree: 'Engineering Degree (M.S. equiv.) in Computer Vision & AI',
+    degree: 'Engineering Degree (M.S. equiv.) in Artificial Intelligence',
     period: 'Aug 2021 – Dec 2024',
     location: 'Gif-sur-Yvette, France',
     coursework: [

@@ -3,7 +3,7 @@ import { Strokes } from '@/components/ink';
 
 /**
  * Fig. 3: one step of a convolution, the basic operation of computer vision
- * models, for the Computer Vision & AI degree. A 3×3 kernel over a 6×6 input
+ * models, for the AI degree. A 3×3 kernel over a 6×6 input
  * (stride 1, no padding) produces a 4×4 feature map; the highlighted window
  * produces the highlighted output cell. The sizes are arithmetically true:
  * 6 − 3 + 1 = 4.
