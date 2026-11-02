@@ -7,33 +7,59 @@
 /* -------------------------------------------------------------------------- */
 
 @layer base {
+  /* ---- Palette: "Steel & Rose" -------------------------------------------
+     THE place where colours are defined for the page. Plain hex, so a palette
+     swap is a find-and-replace of seven values here, seven in the dark block
+     below, and the mirror in src/lib/palette.ts (used by the OG images and
+     theme-color). Tailwind reads these through color-mix() so opacity
+     modifiers like border-ink/20 still work (tailwind.config.ts).
+     Ratios are WCAG contrast against --paper; see docs/notes/frontend.md,
+     section 12.                                                            */
   :root {
     color-scheme: light;
+    --paper: #f1f2f4; /* cool steel paper                                 */
+    --paper-deep: #e6e8ec; /* figure plates                                 */
+    --mat: #f7f8f9; /* photo mounts                                         */
+    --ink: #121418; /* text                                     16.5:1      */
+    --graphite: #5a606b; /* secondary text                          5.7:1   */
+    --accent: #9e3d5b; /* dusty rose, the one signal colour        5.7:1     */
+    --sketch: #b7bcc6; /* construction lines and ticks; never text           */
+    --shadow: #121418;
+  }
 
-    /* Materials, stored as RGB channels so Tailwind can add opacity
-       (border-ink/20). Contrast ratios are against --paper; see
-       docs/notes/frontend.md, section 11.                                   */
-    --paper: 230 231 220; /* #E6E7DC grey-green bone paper                  */
-    --paper-deep: 222 223 211; /* #DEDFD3 figure plates; graphite on it 5.1:1  */
-    --mat: 240 240 233; /* #F0F0E9 photo mount                               */
-    --ink: 27 35 49; /* #1B2331 iron-gall blue-black       12.6:1           */
-    --graphite: 85 91 94; /* #555B5E pencil, secondary text     5.5:1        */
-    --accent: 138 45 51; /* #8A2D33 oxblood correction ink     6.7:1         */
-    --pencil: 142 143 136; /* #8E8F88 construction lines; never for text     */
-    --shadow: 27 35 49;
-    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.2 0 0 0 0 0.22 0 0 0 0 0.2 0 0 0 0.2 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
-    --img-filter: grayscale(1) sepia(0.2) contrast(0.86) brightness(1.1);
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --paper: #101216;
+      --paper-deep: #191c22;
+      --mat: #1f232a;
+      --ink: #e9eaee; /*                                          15.6:1      */
+      --graphite: #9aa0ab; /*                                      7.1:1      */
+      --accent: #e58ba6; /*                                        7.7:1      */
+      --sketch: #4a505c;
+      --shadow: #000000;
+    }
+  }
+
+  /* ---- Everything that is not a colour ---------------------------------- */
+  :root {
+    /* Paper grain: a neutral (not warm) speckle whose strength follows the
+       theme. The colour of the specks comes from the matrix's last column;
+       its alpha row sets the strength. */
+    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.12 0 0 0 0 0.13 0 0 0 0 0.16 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    --img-filter: grayscale(1) contrast(0.9) brightness(1.06);
 
     /* Fluid type scale, 360px -> 1440px viewport.
-       Ratio 1.2 on phones, 1.25 (major third) on desktop: quieter than a
-       magazine, as a book is.                                               */
+       Ratio 1.2 on phones, 1.25 (major third) on desktop. Archivo at 110%
+       width sets wider than the old Caslon, so the display size tops out
+       at 96px instead of 120px.                                             */
     --step-0: clamp(1.0625rem, 1.0417rem + 0.0926vw, 1.125rem); /* 17 -> 18 */
     --step-1: clamp(1.275rem, 1.231rem + 0.194vw, 1.406rem); /* 20.4 -> 22.5 */
     --step-2: clamp(1.53rem, 1.454rem + 0.338vw, 1.758rem); /* 24.5 -> 28.1 */
     --step-3: clamp(1.836rem, 1.716rem + 0.535vw, 2.197rem); /* 29.4 -> 35.2 */
     --step-4: clamp(2.203rem, 2.022rem + 0.806vw, 2.747rem); /* 35.3 -> 44 */
     --step-5: clamp(2.644rem, 2.381rem + 1.169vw, 3.433rem); /* 42.3 -> 54.9 */
-    --step-display: clamp(3rem, 1.5rem + 6.667vw, 7.5rem); /* 48 -> 120 */
+    --step-display: clamp(2.75rem, 1.625rem + 5vw, 6rem); /* 44 -> 96 */
 
     /* 12-column grid */
     --margin: clamp(1rem, 0.25rem + 3.4vw, 4rem); /* 16 -> 64 */
@@ -42,23 +68,10 @@
     --header-h: 4rem;
   }
 
-  /* "The journal by lamplight": not an inversion. A warm umber paper, a pale
-     parchment ink (not white, which would glare), graphite lifted to keep
-     5:1+, and the oxblood desaturated and lightened so it still reads as
-     correction ink on a dark page. */
   @media (prefers-color-scheme: dark) {
     :root {
-      color-scheme: dark;
-      --paper: 26 25 21; /* #1A1915 */
-      --paper-deep: 36 34 29; /* #24221D */
-      --mat: 44 42 36; /* #2C2A24 */
-      --ink: 230 223 206; /* #E6DFCE   13.2:1 */
-      --graphite: 166 158 143; /* #A69E8F    6.6:1 */
-      --accent: 197 138 130; /* #C58A82    6.1:1 */
-      --pencil: 98 94 84; /* #625E54 */
-      --shadow: 0 0 0;
-      --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.95 0 0 0 0 0.88 0 0 0 0 0.75 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
-      --img-filter: grayscale(1) sepia(0.22) contrast(0.88) brightness(0.86);
+      --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.85 0 0 0 0 0.87 0 0 0 0 0.92 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+      --img-filter: grayscale(1) contrast(0.9) brightness(0.86);
     }
   }
 
@@ -74,16 +87,14 @@
   }
 
   * {
-    border-color: rgb(var(--ink) / 0.85);
+    border-color: color-mix(in srgb, var(--ink) 85%, transparent);
   }
 
   /* Paper grain: SVG fractal noise (feTurbulence) as a 220px tile, ~500
-     bytes inline, no image request. The colour matrix turns the noise into
-     specks of one colour whose alpha follows the noise; the last row of the
-     matrix sets how strong they are (0.2 on light paper, 0.07 by lamplight). It's a background, so it scrolls with the sheet and
-     sits under the text, never on top of it. */
+     bytes inline, no image request. It's a background, so it scrolls with
+     the sheet and sits under the text, never on top of it. */
   body {
-    @apply bg-paper font-serif text-step-0 text-ink antialiased;
+    @apply bg-paper font-sans text-step-0 text-ink antialiased;
     font-kerning: normal;
     font-variant-ligatures: common-ligatures;
     text-rendering: optimizeLegibility;
@@ -91,28 +102,14 @@
     background-size: 220px 220px;
   }
 
-  /* In dark mode a soft lamp glow at the top of the page: the light falls on
-     the open journal and the edges stay in shadow. */
-  @media (prefers-color-scheme: dark) {
-    body {
-      background-image:
-        var(--grain),
-        radial-gradient(130% 70% at 50% 0%, rgb(255 210 140 / 0.06), transparent 70%);
-      background-size:
-        220px 220px,
-        100% 100vh;
-      background-repeat: repeat, no-repeat;
-    }
-  }
-
   ::selection {
-    background: rgb(var(--accent) / 0.25);
-    color: rgb(var(--ink));
+    background: color-mix(in srgb, var(--accent) 22%, transparent);
+    color: var(--ink);
   }
 
-  /* One focus style everywhere: a 2px outline in correction ink. */
+  /* One focus style everywhere: a 2px outline in the signal colour. */
   :focus-visible {
-    outline: 2px solid rgb(var(--accent));
+    outline: 2px solid var(--accent);
     outline-offset: 3px;
   }
 }
@@ -137,14 +134,16 @@
     @apply font-mono text-step--1 uppercase tracking-[0.06em];
   }
 
-  /* Engraved caps: the title-page voice ("Field notes of", "Entry II"). */
+  /* Spaced caps in the text face: the running-head voice ("Entry II"). */
   .caps {
-    @apply font-serif text-step--1 uppercase tracking-[0.22em];
+    @apply font-sans text-step--1 font-medium uppercase tracking-[0.18em];
   }
 
-  /* Display headings: Libre Caslon Display, tightened slightly. */
+  /* Display headings: Archivo, widened to 110% on its width axis. The extra
+     width is the "technical" note; weight 500 and slightly tight tracking
+     keep it sober. */
   .display {
-    @apply font-display font-normal tracking-[-0.012em];
+    @apply font-display font-medium tracking-[-0.02em];
   }
 
   /* Handwriting, only for marginal notes of a few words. */
@@ -152,7 +151,7 @@
     @apply font-hand text-step-1 leading-tight text-accent;
   }
 
-  /* Underlined link: graphite underline that turns to correction ink. */
+  /* Underlined link: a quiet ink underline that turns to the signal colour. */
   .link {
     @apply underline decoration-ink/40 decoration-1 underline-offset-[0.22em] transition-colors duration-200;
   }
@@ -166,14 +165,14 @@
     @apply inline-flex min-h-11 items-center;
   }
 
-  /* A photograph mounted in the journal: a pale mat, a hairline edge and a
-     soft paper shadow. No tape, no corners, no rotation. */
+  /* A photograph mounted on the page: a pale mat, a hairline edge and a
+     soft shadow. No tape, no corners, no rotation. */
   .mounted {
     @apply bg-mat p-[6px];
-    border: 1px solid rgb(var(--ink) / 0.14);
+    border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
     box-shadow:
-      0 1px 1px rgb(var(--shadow) / 0.06),
-      0 12px 28px -18px rgb(var(--shadow) / 0.45);
+      0 1px 1px color-mix(in srgb, var(--shadow) 6%, transparent),
+      0 12px 28px -18px color-mix(in srgb, var(--shadow) 45%, transparent);
   }
   .mounted img {
     filter: var(--img-filter);
@@ -183,6 +182,13 @@
   .plate {
     @apply bg-paper-deep;
   }
+}
+
+/* The display face's width axis. Applied wherever the display family is, so
+   SVG labels set in it (the timeline) match the headings. */
+.font-display,
+.display {
+  font-stretch: 110%;
 }
 
 /* -------------------------------------------------------------------------- */

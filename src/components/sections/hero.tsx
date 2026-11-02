@@ -34,7 +34,7 @@ export default function Hero() {
           <h1 id="hero-title">
             <span className="caps block text-graphite">Field notes of</span>
             <span className="display mt-4 block text-display">{personalData.name}</span>
-            <span className="mt-5 block font-serif text-step-2 italic">
+            <span className="mt-5 block font-sans text-step-2 italic">
               <span aria-hidden="true" className="text-graphite">— </span>
               {personalData.title}
             </span>

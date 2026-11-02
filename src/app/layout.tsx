@@ -1,29 +1,30 @@
 import type { Metadata, Viewport } from 'next';
-import { IBM_Plex_Mono, La_Belle_Aurore, Libre_Caslon_Display, Libre_Caslon_Text } from 'next/font/google';
+import { Archivo, IBM_Plex_Mono, Instrument_Sans, La_Belle_Aurore } from 'next/font/google';
 import './globals.css';
 
 import SiteHeader from '@/components/site-header';
 import SiteFooter from '@/components/site-footer';
 import { personalData, siteMetadata } from '@/lib/data';
+import { palette } from '@/lib/palette';
 import { siteUrl } from '@/lib/site';
 import { cn } from '@/lib/utils';
 
-/* Display: Libre Caslon Display, the high-contrast cut of Caslon drawn for
-   large sizes. Sharp serifs and thin hairlines give headings presence
-   without weight. */
-const display = Libre_Caslon_Display({
+/* Display: Archivo, a grotesque with a width axis (62% to 125%). Set at
+   110% (globals.css, .display) it gains the slightly extended, engineered
+   look of early-2000s hardware branding without turning into a sci-fi face.
+   Variable, so one file covers every weight and width. */
+const display = Archivo({
   subsets: ['latin'],
-  weight: '400',
+  axes: ['wdth'],
   variable: '--font-display',
   display: 'swap',
 });
 
-/* Text: Libre Caslon Text, the same family cut for reading: a larger
-   x-height and sturdier hairlines than the display cut. A real book face, so
-   long case studies read like a journal, not like a web app. */
-const text = Libre_Caslon_Text({
+/* Text: Instrument Sans, a contemporary grotesque with open apertures, a
+   true italic and calm, slightly narrow proportions that read well at 17 to
+   18px. Variable weight. */
+const text = Instrument_Sans({
   subsets: ['latin'],
-  weight: ['400', '700'],
   style: ['normal', 'italic'],
   variable: '--font-text',
   display: 'swap',
@@ -72,8 +73,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#E6E7DC' },
-    { media: '(prefers-color-scheme: dark)', color: '#1A1915' },
+    { media: '(prefers-color-scheme: light)', color: palette.light.paper },
+    { media: '(prefers-color-scheme: dark)', color: palette.dark.paper },
   ],
   colorScheme: 'light dark',
 };

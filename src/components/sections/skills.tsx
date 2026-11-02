@@ -15,10 +15,10 @@ export default function Skills() {
         <h3 className="label pt-2 text-graphite md:col-span-3">Fields</h3>
         <ul className="reveal flex flex-wrap items-baseline gap-y-1 md:col-span-9">
           {aiDomains.map((domain, i) => (
-            <li key={domain} className="font-display text-step-3">
+            <li key={domain} className="font-display text-step-2">
               {domain}
               {i < aiDomains.length - 1 ? (
-                <span aria-hidden="true" className="px-[0.35em] text-pencil">
+                <span aria-hidden="true" className="px-[0.35em] text-sketch">
                   ·
                 </span>
               ) : null}

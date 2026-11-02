@@ -13,7 +13,7 @@ const initialState: FormState = {
 type FieldName = keyof NonNullable<FormState['errors']>;
 
 const fieldClass =
-  'peer w-full rounded-none border-0 border-b border-ink/50 bg-transparent px-0 py-3 font-serif text-step-1 text-ink placeholder:text-graphite/80 focus:border-b-2 focus:border-accent focus:outline-none focus-visible:outline-none aria-[invalid=true]:border-b-2 aria-[invalid=true]:border-accent';
+  'peer w-full rounded-none border-0 border-b border-ink/50 bg-transparent px-0 py-3 font-sans text-step-1 text-ink placeholder:text-graphite/80 focus:border-b-2 focus:border-accent focus:outline-none focus-visible:outline-none aria-[invalid=true]:border-b-2 aria-[invalid=true]:border-accent';
 
 function Field({
   name,

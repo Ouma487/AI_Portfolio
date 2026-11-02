@@ -378,7 +378,7 @@ So the rules this design follows:
      mistakes it for results. The Kairos entry points back to it in the
      margin ("calibrated ✓ cf. fig. 1"), the way a notebook cross-references
      itself.
-   - *Fig. 2, the route* (experience). CentraleSupélec → Renault (Guyancourt)
+   - *Fig. 2, the route* (experience; replaced by a timeline, see 12.5). CentraleSupélec → Renault (Guyancourt)
      → Libertify → Kairos (Paris), drawn **to scale** from real coordinates:
      an equirectangular projection around 48.78°N at 18 px per km, a
      graticule in degrees, a 5 km scale bar, a north arrow. The "21 km as
@@ -402,7 +402,7 @@ The test used in every review pass was: *would a quant fund or an AI lab
 recruiter take this page seriously?* If a detail only makes sense as
 decoration, it goes.
 
-### 11.2 Colour as real materials
+### 11.2 Colour as real materials (superseded by section 12)
 
 Each token is named after a material, which keeps the palette honest: you
 only add a colour if there's a physical reason for it to be on the page.
@@ -449,7 +449,7 @@ Everything that is text passes AA. `pencil` is deliberately below 3:1 and is
 only used for construction lines (the dashed diagonal, the map grid), which
 are not needed to understand the figure.
 
-### 11.3 The lamplight theme: how the dark mode was derived
+### 11.3 The lamplight theme (superseded by section 12)
 
 Inverting a light palette gives white text on black, which glares, and turns
 every colour into its complement. Instead the dark theme asks: *what does
@@ -474,7 +474,7 @@ All of it is the same token names redefined under
 Because the tokens are RGB channels, `border-ink/20` etc. keep working in
 both themes.
 
-### 11.4 The type pairing
+### 11.4 The type pairing (superseded by section 12; the method still applies)
 
 | Role | Family | Why |
 | --- | --- | --- |
@@ -596,16 +596,223 @@ src/app/globals.css               tokens (materials, scale), grain, .mounted, .p
 src/lib/rough.ts                  seeded rough.js helpers (server only)
 src/components/ink.tsx            InkRule, Circled, Underlined, Strokes
 src/components/ink-draw.tsx       draw-once animation trigger (client)
-src/components/sketches/          calibration.tsx (Fig. 1), route-map.tsx (Fig. 2), convolution.tsx (Fig. 3)
+src/components/sketches/          calibration.tsx (Fig. 1), timeline.tsx (Fig. 2), convolution.tsx (Fig. 3)
+src/lib/palette.ts                the palette as hex, mirrored from globals.css (OG images, theme-color)
 src/components/section-header.tsx "Entry II" header; numerals follow `navigation` order
 src/components/contact.tsx        contact section (server) + contact-form.tsx (client)
 ```
 
-On phones the margin annotations fall inline under the entry text, the map
-becomes a vertical route (an ordered list, which also serves screen readers
-on desktop, where the drawing is `aria-hidden`), and the spreads stack
+On phones the margin annotations fall inline under the entry text, the timeline
+becomes a vertical rail (an ordered list, which also serves screen readers
+on desktop), and the spreads stack
 image-first.
 
 The hero's line illustration (`personalData.heroImage`) is no longer shown:
 its place is taken by Fig. 1, which says something specific about the work.
 The asset and the data field are left untouched.
+
+## 12. Steel & Rose: the second palette, new type, and the timeline
+
+The journal concept (section 11) stays: dated entries, three true sketches,
+a few handwritten notes. What changed is its *voice*: the colours, the
+typefaces and Fig. 2.
+
+### 12.1 Why the old look read as "Claude"
+
+Nothing on the old site copied Anthropic's brand, yet it reminded people of
+it. Brand recognition works on a few broad signals, not on exact values, and
+the journal hit three of Claude's at once:
+
+1. **Colour temperature.** Every colour has a temperature: reds, oranges and
+   yellows read as warm, blues as cool. The old paper (`#E6E7DC`) and its
+   dark mode (warm umber with a lamp glow) were warm. Claude's interface is a
+   warm off-white paper too. Temperature is the first thing the eye notices,
+   before any detail, so it sets the "family" a page belongs to.
+2. **A literary serif.** Libre Caslon is a book face. Serif text on warm
+   paper is exactly the combination Claude uses for its own voice.
+3. **A red-brown accent.** Oxblood is not terracotta, but at a glance both
+   are "earthy red on cream". Accents are what people remember of a brand
+   (think of a single colour that stands for a company), so a near neighbour
+   of Claude's orange was enough.
+
+Any one of these alone is fine. All three together make a recognisable
+silhouette. The fix was to change all three: cool instead of warm, a
+contemporary grotesque instead of a book serif, rose instead of red-brown.
+
+### 12.2 How temperature and one signal colour make an identity
+
+The new palette is almost entirely **cool neutrals**: steel paper, near-black
+ink with a hint of blue, a blue-grey graphite. These are what most of the
+page is made of, and they carry the "silver, technical" feel (the Y2K nod is
+the steel tone itself, not a gradient or effect).
+
+Against that, **one** saturated colour does all the signalling: a dusty rose.
+Because it is the only warm and the only saturated thing on the page, the eye
+treats every rose mark as meaningful. That is the whole trick: identity
+comes from the contrast between a quiet field and one signal, and the signal
+only stays a signal while it is rare. Rose is therefore limited to:
+
+- the active navigation item and link underlines on hover,
+- the handwritten notes (four on the home page, at most),
+- the timeline's current role (its bar, arrowhead and "now"), and "Present"
+  in the experience dates,
+- hand marks on measured figures (the circled and underlined numbers),
+- the focus outline and form errors.
+
+Bullet arrows and the convolution kernel were rose in the first draft and
+were moved to graphite and ink in the critique pass: a list of results is not
+a signal.
+
+### 12.3 The tokens and their contrast
+
+All colours are custom properties in **one place**, the top of
+`src/app/globals.css` (`:root`, then the dark block), as plain hex.
+`tailwind.config.ts` only points class names at them:
+
+```ts
+const token = (name) =>
+  `color-mix(in srgb, var(--${name}) calc(<alpha-value> * 100%), transparent)`;
+```
+
+`color-mix()` blends the token with transparent, which is how `border-ink/20`
+(20% ink) keeps working on hex tokens. The OG images and `theme-color` can't
+read CSS variables, so `src/lib/palette.ts` holds the same values as a TS
+object; it's the only other place a hex value lives. Swapping the palette is
+editing those two lists.
+
+| Token | Light | Dark | Role |
+| --- | --- | --- | --- |
+| `--paper` | `#F1F2F4` | `#101216` | Page |
+| `--paper-deep` | `#E6E8EC` | `#191C22` | Figure plates |
+| `--mat` | `#F7F8F9` | `#1F232A` | Photo mounts |
+| `--ink` | `#121418` | `#E9EAEE` | Text, strong lines |
+| `--graphite` | `#5A606B` | `#9AA0AB` | Secondary text |
+| `--accent` | `#9E3D5B` | `#E58BA6` | The one signal colour |
+| `--sketch` | `#B7BCC6` | `#4A505C` | Construction lines only |
+
+**How contrast is computed (WCAG 2.x).** First each colour's *relative
+luminance* L, i.e. how bright it looks to the eye, from 0 (black) to 1
+(white):
+
+1. Take each channel as a number from 0 to 1 (`9E` = 158 → 0.620).
+2. Undo the screen's gamma: `c ≤ 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055)^2.4`.
+3. Weight the channels by how sensitive the eye is to them:
+   `L = 0.2126 R + 0.7152 G + 0.0722 B` (green dominates, blue barely counts).
+
+Then the ratio between the lighter colour L1 and the darker L2 is
+
+```
+contrast = (L1 + 0.05) / (L2 + 0.05)
+```
+
+The `+ 0.05` models the glare that is always on a screen, so the ratio runs
+from 1:1 (same colour) to 21:1 (black on white). AA asks for 4.5:1 for body
+text and 3:1 for large text and non-text graphics. Computed values:
+
+| Pair | Light (paper / plate / mat) | Dark (paper / plate / mat) |
+| --- | ---: | ---: |
+| ink | 16.5 / 15.0 / 17.3 | 15.6 / 14.2 / 13.1 |
+| graphite | 5.7 / 5.2 / 6.0 | 7.1 / 6.5 / 6.0 |
+| accent | 5.7 / 5.2 / 6.0 | 7.7 / 7.0 / 6.4 |
+| sketch | 1.7 / 1.6 / 1.8 | 2.3 / 2.1 / 2.0 |
+
+Every text colour passes AA on every surface it sits on, in both themes.
+
+**Why `--sketch` is never text.** At 1.7:1 it fails even the 3:1 for
+graphics, on purpose: it's for lines you are *not* meant to read first (the
+dashed "perfect calibration" diagonal, the convolution's projection lines).
+If it carried a word, that word would be unreadable for many people; if it
+carried something essential, the figure would fail for them. So anything
+that must be read (tick labels, the timeline's leader lines, axis ticks) is
+graphite, and `--sketch` stays decoration.
+
+**Dark mode** is the same token names redefined under
+`prefers-color-scheme: dark`, not an inversion: paper is a blue-black
+(`#101216`, never pure black), ink is a soft off-white (not white, which
+glares), and the rose is lighter and less saturated so it doesn't vibrate on
+the dark ground. The old warm "lamp glow" is gone; the grain is neutral grey
+in both themes. There is no gradient or shimmer anywhere.
+
+### 12.4 The type
+
+Candidates were rendered side by side (the name at 96–110 px, a section
+title, a role line, a body paragraph with italics) on the new paper, light
+and dark.
+
+| Role | Chosen | Why | Rejected |
+| --- | --- | --- | --- |
+| Display | **Archivo**, weight 500, width axis at **110%** | A sober grotesque with a real width axis. Slightly extended, it has the engineered, early-2000s hardware feel without any sci-fi gimmick, and it stays credible in long project titles. | **Syne** (the single-storey *a* and wide bowls read quirky and fashion-y), **Bricolage Grotesque** condensed (poster-like, loud), **Space Grotesk** (the default "AI startup" face), **Schibsted** and **Familjen Grotesk** (solid but anonymous), **Unbounded** (rounded). Orbitron, Audiowide, Michroma were excluded up front. |
+| Text | **Instrument Sans** | Contemporary, open, slightly narrow, with a true italic (the site uses italics for degrees, taglines and "at Company"). Calm at 17–18 px. | **Geist** (reads as a product-UI face; less warmth in long text), **Inter Tight** (too tight for long body text), **Hanken Grotesk** (fine, but rounder and less distinct). |
+| Mono | **IBM Plex Mono** (kept) | Dates and metadata; neutral and already paired well. | JetBrains Mono, Geist Mono: no reason to change. |
+| Hand | **La Belle Aurore** (kept) | Still the most adult hand; now in rose. | Nothing You Could Do, Reenie Beanie (more casual). |
+
+The width is set with `font-stretch: 110%` on `.display` and `.font-display`
+(globals.css), which next/font supports because Archivo is loaded with its
+`wdth` axis. The OG images ask Google Fonts for the same instance
+(`Archivo:wdth,wght@110,500`).
+
+**Scale.** Same fluid method as before (`clamp(min, a rem + b vw, max)`,
+360 → 1440 px, ratio 1.2 → 1.25). Only the display size changed: the wide
+face sets about 20% wider than Caslon, so the name tops out at 96 px instead
+of 120 px.
+
+| Token | 360 px | 1440 px | `clamp()` |
+| --- | ---: | ---: | --- |
+| `step--1` | 13 | 13 | `0.8125rem` |
+| `step-0` | 17 | 18 | `clamp(1.0625rem, 1.0417rem + 0.0926vw, 1.125rem)` |
+| `step-1` | 20.4 | 22.5 | `clamp(1.275rem, 1.231rem + 0.194vw, 1.406rem)` |
+| `step-2` | 24.5 | 28.1 | `clamp(1.53rem, 1.454rem + 0.338vw, 1.758rem)` |
+| `step-3` | 29.4 | 35.2 | `clamp(1.836rem, 1.716rem + 0.535vw, 2.197rem)` |
+| `step-4` | 35.3 | 44 | `clamp(2.203rem, 2.022rem + 0.806vw, 2.747rem)` |
+| `step-5` | 42.3 | 54.9 | `clamp(2.644rem, 2.381rem + 1.169vw, 3.433rem)` |
+| `display` | 44 | 96 | `clamp(2.75rem, 1.625rem + 5vw, 6rem)` |
+
+### 12.5 Fig. 2 is now a timeline
+
+The route map drew the career in *space*, but every stop is within 20 km of
+Paris, so the map said little. The career moved in *time*, so Fig. 2 is a
+timeline (`src/components/sketches/timeline.tsx`).
+
+**Reading it.** One ink axis with a tick per January. Study sits above the
+axis, work below it. Each period is a hatched bar from its first month to the
+end of its last month; the current role (in rose) has no right edge and ends
+in an arrowhead, because it hasn't ended. One handwritten note,
+"→ into production", sits in the empty corner after the degree.
+
+**Dates to x positions: a linear scale.** A date becomes a *decimal year*
+(May 2024 = 2024 + 4/12 = 2024.333; an end month counts to its last day, so
+Oct 2024 ends at 2024.833). Then
+
+```
+x = x0 + (t − t_start) / (t_end − t_start) · width
+```
+
+with `t_start` the January before the first period (2021), `t_end` today and
+`x0`, `width` the drawing's left edge and length. The fraction
+`(t − t_start) / (t_end − t_start)` is "how far through the whole time span
+this date is", from 0 to 1, and multiplying by the width turns it into a
+distance. Because it is linear, equal durations always get equal lengths, so
+the six-month internship really is half the length of the one-year job.
+"Today" is the build date, so the drawing extends itself on every deploy.
+
+**Labels without collisions.** Each label is centred on its bar (the
+ongoing one starts at its bar instead, since it has no end to centre on).
+A small layout pass walks the periods in order and puts each label on the
+row nearest the axis where its estimated width doesn't overlap a label
+already there (with a 14-unit gap). If it has to go one row further out it
+gets a leader line, and that line may not cross a nearer label either. With
+today's data every label fits on the first row; the rule is there so adding
+an entry can't produce overlapping text.
+
+**Short labels** are derived from data.ts: an internship becomes "intern",
+"AI Engineer / Data Scientist" becomes "AI engineer", a degree in
+Artificial Intelligence becomes "AI degree". Periods that start before 2021
+(the CPGE years) are left out; they appear in the Education section.
+
+**Small screens and screen readers.** Below `lg` (1024 px) the same periods
+render as a vertical rail: a rough ink line down the left, a dot per entry,
+dates, name and full role on the right, and an arrowhead for the ongoing role.
+It is an ordered list, so on desktop it stays in the page as `sr-only` for
+screen readers, and the SVG has a `<title>` that summarises the whole path.
+The horizontal drawing starts at `lg` rather than `md` because between 768
+and 1024 px its labels would shrink below 11 px.

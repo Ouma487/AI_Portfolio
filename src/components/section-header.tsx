@@ -11,7 +11,7 @@ type SectionHeaderProps = {
 
 /**
  * Every home-page section opens like a journal entry: "Entry II" in engraved
- * caps, the title in Caslon Display, and a pen rule. The numeral comes from
+ * caps, the title in the display face, and a pen rule. The numeral comes from
  * the section's position in `navigation`, so the numbering is always true to
  * the order on the page.
  */

@@ -8,7 +8,7 @@ and has a contact form that emails messages straight to her inbox.
 
 - **[Next.js 15](https://nextjs.org)** (App Router) with **React 18** and **TypeScript**
 - **[Tailwind CSS](https://tailwindcss.com)** with a small token system (see `docs/notes/frontend.md`)
-- **next/font** with Libre Caslon (Display + Text), IBM Plex Mono and La Belle Aurore
+- **next/font** with Archivo (display, 110% width), Instrument Sans (text), IBM Plex Mono and La Belle Aurore
 - **[rough.js](https://roughjs.com)** to generate the hand-drawn ink sketches at build time
 - **Server Actions** + **[zod](https://zod.dev)** validation for the contact form
 - **[Resend](https://resend.com)** to deliver contact form email
@@ -53,7 +53,7 @@ src/
     site-footer.tsx       Footer
     section-header.tsx    The shared "Entry II" journal-entry header
     ink.tsx, ink-draw.tsx Hand-drawn rules, circles and underlines; the draw-once animation
-    sketches/             Fig. 1 calibration, Fig. 2 route map, Fig. 3 convolution
+    sketches/             Fig. 1 calibration, Fig. 2 timeline, Fig. 3 convolution
   lib/
     data.ts               All site content: bio, projects, experience, skills
     site.ts               Derived values: site URL, sorted experience, section numbers

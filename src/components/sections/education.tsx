@@ -5,7 +5,7 @@ import { InkRule } from '@/components/ink';
 import ConvolutionSketch from '@/components/sketches/convolution';
 
 /** The AI degree gets Fig. 3 (a convolution) in its margin. */
-const isAiDegree = (degree: string) => /\bAI\b|computer vision/i.test(degree);
+const isAiDegree = (degree: string) => /\bAI\b|artificial intelligence|computer vision/i.test(degree);
 
 export default function Education() {
   return (
@@ -41,7 +41,7 @@ export default function Education() {
                     <ul className="mt-5 max-w-measure space-y-2">
                       {entry.highlights.map((h) => (
                         <li key={h} className="grid grid-cols-[1.75rem_1fr]">
-                          <span aria-hidden="true" className="text-accent">
+                          <span aria-hidden="true" className="text-graphite">
                             →
                           </span>
                           <span>{h}</span>
@@ -57,7 +57,7 @@ export default function Education() {
                           <li key={c}>
                             {c}
                             {j < entry.coursework!.length - 1 ? (
-                              <span aria-hidden="true" className="px-2 text-pencil">
+                              <span aria-hidden="true" className="px-2 text-sketch">
                                 ·
                               </span>
                             ) : null}

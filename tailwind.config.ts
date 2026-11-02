@@ -5,7 +5,10 @@ import type { Config } from 'tailwindcss';
  * maps them to Tailwind class names. See docs/notes/frontend.md for the
  * reasoning behind the scale and the palette.
  */
-const token = (name: string) => `rgb(var(--${name}) / <alpha-value>)`;
+// The tokens are plain hex; color-mix() lets Tailwind's opacity modifiers
+// (border-ink/20, fill-accent/20) still work on them.
+const token = (name: string) =>
+  `color-mix(in srgb, var(--${name}) calc(<alpha-value> * 100%), transparent)`;
 
 export default {
   content: ['./src/components/**/*.{ts,tsx}', './src/app/**/*.{ts,tsx}'],
@@ -18,11 +21,11 @@ export default {
         ink: token('ink'),
         graphite: token('graphite'),
         accent: token('accent'),
-        pencil: token('pencil'),
+        sketch: token('sketch'),
       },
       fontFamily: {
-        display: ['var(--font-display)', 'Georgia', 'serif'],
-        serif: ['var(--font-text)', 'Georgia', 'serif'],
+        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-text)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
         hand: ['var(--font-hand)', 'cursive'],
       },

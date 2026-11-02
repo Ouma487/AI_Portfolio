@@ -63,13 +63,13 @@ export default function ConvolutionSketch() {
           <Strokes d={grid(IN, 6, 200)} width={0.7} />
           <Strokes d={grid(OUT, 4, 300)} width={0.7} />
         </g>
-        {/* Where the window lands, in pencil construction lines. */}
-        <g className="text-pencil" stroke="currentColor" strokeWidth={0.8} strokeDasharray="2 3">
+        {/* Where the window lands, in faint construction lines. */}
+        <g className="text-sketch" stroke="currentColor" strokeWidth={0.8} strokeDasharray="2 3">
           <line x1={win.x + win.s} y1={win.y} x2={cell.x} y2={cell.y} />
           <line x1={win.x + win.s} y1={win.y + win.s} x2={cell.x} y2={cell.y + CELL} />
         </g>
-        <rect x={cell.x} y={cell.y} width={CELL} height={CELL} className="fill-accent/20" />
-        <g className="text-accent">
+        <rect x={cell.x} y={cell.y} width={CELL} height={CELL} className="fill-ink/10" />
+        <g className="text-ink">
           <Strokes d={box(win.x, win.y, win.s, win.s, 401)} width={1.5} />
           <Strokes d={box(cell.x, cell.y, CELL, CELL, 402)} width={1.4} />
         </g>
@@ -80,7 +80,7 @@ export default function ConvolutionSketch() {
           <text x={OUT[0]} y={OUT[1] - 10}>
             MAP 4×4
           </text>
-          <text x={win.x} y={IN[1] + 6 * CELL + 16} className="fill-accent">
+          <text x={win.x} y={IN[1] + 6 * CELL + 16} className="fill-ink">
             KERNEL 3×3
           </text>
         </g>

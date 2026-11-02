@@ -193,7 +193,7 @@ const ProjectPage = async ({ params }: ProjectPageProps) => {
           <ul className="max-w-measure space-y-3">
             {project.results.map((result) => (
               <li key={result} className="grid grid-cols-[2.5rem_1fr]">
-                <span aria-hidden="true" className="text-accent">→</span>
+                <span aria-hidden="true" className="text-graphite">→</span>
                 <span>{result}</span>
               </li>
             ))}

@@ -69,13 +69,13 @@ export default function CalibrationSketch() {
           Schematic reliability diagram: predicted probability against observed frequency, with
           the forecast curve lying close to the diagonal.
         </title>
-        {/* Construction line: perfect calibration, in pencil. */}
+        {/* Construction line: perfect calibration, in the faint sketch tone. */}
         <line
           x1={px(0)}
           y1={py(0)}
           x2={px(1)}
           y2={py(1)}
-          className="text-pencil"
+          className="text-sketch"
           stroke="currentColor"
           strokeWidth={1}
           strokeDasharray="3 4"
