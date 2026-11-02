@@ -6,6 +6,13 @@ your next project. The brief was an "editorial / research notebook"
 direction: an engineer's lab notebook crossed with a Swiss-style magazine,
 strictly black and white, with the outlined display type from your Figma.
 
+> **Update: "The Field Journal".** The site has since been re-themed as an
+> engineer-explorer's field journal (section 11). The ideas in sections 1–10
+> (one type scale, one grid, one header pattern, server-first components,
+> accessibility) all still apply, but the concrete fonts, colours and scale
+> values in sections 2, 3 and 5 describe the previous black-and-white design.
+> Section 11 gives the current values and explains why.
+
 ---
 
 ## 1. Why the old site looked "templated"
@@ -182,7 +189,8 @@ interactive leaves client components.**
 | Client component | Why it needs the browser |
 | --- | --- |
 | `site-header.tsx` | IntersectionObserver, menu open state, keyboard handling |
-| `contact.tsx`, `submit-button.tsx` | `useFormState` / `useFormStatus` for the Server Action |
+| `contact-form.tsx`, `submit-button.tsx` | `useFormState` / `useFormStatus` for the Server Action |
+| `ink-draw.tsx` | IntersectionObserver that starts the draw-once ink animation |
 | `paris-time.tsx` | The current time is only known when you visit |
 | `current-year.tsx` | Same: a static page would freeze the year at build time |
 
@@ -338,3 +346,266 @@ Removed: the shadcn `ui/` components, the toast system (nothing used it),
 `lucide-react` (arrows are typographic: ↗ → ↓), two Tailwind plugins (the
 outline is plain CSS now) and the unused colour tokens (blue primary, purple
 accent, chart and sidebar colours).
+
+---
+
+## 11. The Field Journal
+
+The concept: the site is the field journal of an engineer-explorer, which
+is also a scientist's lab notebook. The *idea* comes from the journals
+characters keep in narrative games (Arthur Morgan's sketchbook, Nathan
+Drake's notebook): a curious person recording a journey in ink. Nothing is
+borrowed from those games: no fonts, artwork, logos, Western motifs or game
+UI. What's borrowed is the attitude: careful handwriting, precise sketches,
+dated entries.
+
+### 11.1 Restraint: what separates "adult" from "childish" themed design
+
+A theme turns childish when it becomes a costume: every surface carries a
+prop (tape, coffee stains, torn edges, leather), the props mean nothing, and
+the theme competes with the content. A real naturalist's or engineer's
+notebook looks nothing like that. It's mostly clean writing, ruled lines and
+a few exact drawings, each made because something needed to be recorded.
+
+So the rules this design follows:
+
+1. **At most one illustration per section**, and most sections have none.
+   The whole site has three figures.
+2. **Every sketch is true.** Each one shows something real about the work
+   and could survive a question from an expert:
+   - *Fig. 1, calibration* (hero). A reliability diagram, the picture behind
+     "calibrated forecasting models". It's labelled a schematic so nobody
+     mistakes it for results. The Kairos entry points back to it in the
+     margin ("calibrated ✓ cf. fig. 1"), the way a notebook cross-references
+     itself.
+   - *Fig. 2, the route* (experience). CentraleSupélec → Renault (Guyancourt)
+     → Libertify → Kairos (Paris), drawn **to scale** from real coordinates:
+     an equirectangular projection around 48.78°N at 18 px per km, a
+     graticule in degrees, a 5 km scale bar, a north arrow. The "21 km as
+     the crow flies" note is computed from those coordinates, not typed in.
+   - *Fig. 3, a convolution* (education, beside the Computer Vision & AI
+     degree). A 3×3 kernel on a 6×6 input making one cell of a 4×4 feature
+     map, which is arithmetically right (6 − 3 + 1 = 4, stride 1, no
+     padding). The degree is presented as what it is, an AI engineering
+     degree; the coursework list is plain text with no themed decoration.
+3. **Handwriting only for marginal notes of a few words**, the way an ML
+   engineer annotates their own work ("predicted = observed",
+   "calibrated ✓", "stride 1, no padding"). Never for headings or body text.
+4. **Texture, not props.** A faint paper grain and ink-quality lines. No
+   tape, stains, burnt or torn edges, clips or leather. Photographs are
+   "mounted" with a pale mat, a hairline and a soft shadow, not taped in or
+   tilted.
+5. **The typography stays a book's.** Headings, body and metadata are set
+   like a serious publication; only the marginalia carry the hand.
+
+The test used in every review pass was: *would a quant fund or an AI lab
+recruiter take this page seriously?* If a detail only makes sense as
+decoration, it goes.
+
+### 11.2 Colour as real materials
+
+Each token is named after a material, which keeps the palette honest: you
+only add a colour if there's a physical reason for it to be on the page.
+
+| Token | Light (paper) | Dark (lamplight) | Role |
+| --- | --- | --- | --- |
+| `--paper` | `#E6E7DC` grey-green bone | `#1A1915` warm umber | Page |
+| `--paper-deep` | `#DEDFD3` | `#24221D` | Figure plates |
+| `--mat` | `#F0F0E9` | `#2C2A24` | Photo mounts |
+| `--ink` | `#1B2331` iron-gall blue-black | `#E6DFCE` parchment ink | Text, lines |
+| `--graphite` | `#555B5E` pencil | `#A69E8F` | Secondary text, metadata |
+| `--accent` | `#8A2D33` oxblood | `#C58A82` faded rose | Correction ink: active nav, underlines, circled figures, notes, errors |
+| `--pencil` | `#8E8F88` | `#625E54` | Construction lines only (never text) |
+
+Why these:
+
+- **Paper** isn't the generic "AI cream" (`#F4F1EA`). It leans grey-green,
+  like bone or archival notebook stock, so it reads as a material rather
+  than as "beige website".
+- **Ink** is blue-black, like iron-gall ink, which oxidises to that colour.
+  Pure black on warm paper looks printed; blue-black looks written.
+- **Graphite** is a neutral pencil grey, used for everything secondary.
+- **One accent**, oxblood, used the way an editor uses red ink: to mark,
+  correct and point. A single accent with a clear job is what keeps colour
+  from becoming decoration. (Terracotta was ruled out on purpose: it's the
+  current default "warm" accent and would make the site look generated.)
+
+Contrast ratios (WCAG 2.x formula; AA needs 4.5:1 for body text, 3:1 for
+large text and UI):
+
+| Pair | Light | Dark |
+| --- | ---: | ---: |
+| ink on paper | 12.6:1 | 13.2:1 |
+| graphite on paper | 5.5:1 | 6.6:1 |
+| accent on paper | 6.7:1 | 6.1:1 |
+| ink on plate (`paper-deep`) | 11.7:1 | 12.0:1 |
+| graphite on plate | 5.1:1 | 6.0:1 |
+| accent on plate | 6.2:1 | 5.6:1 |
+| paper on ink (submit button) | 12.6:1 | 13.2:1 |
+| paper on accent (button hover) | 6.7:1 | 6.1:1 |
+| pencil on paper | 2.6:1 | 2.7:1 → decorative lines only |
+
+Everything that is text passes AA. `pencil` is deliberately below 3:1 and is
+only used for construction lines (the dashed diagonal, the map grid), which
+are not needed to understand the figure.
+
+### 11.3 The lamplight theme: how the dark mode was derived
+
+Inverting a light palette gives white text on black, which glares, and turns
+every colour into its complement. Instead the dark theme asks: *what does
+the same journal look like by lamplight?*
+
+- **Paper** becomes a warm umber near-black (`#1A1915`): the page in shadow,
+  still slightly warm, never pure black.
+- **Ink** becomes a pale parchment (`#E6DFCE`), not white. Light text on a
+  dark page needs less contrast than the reverse to feel equally strong, and
+  13:1 is plenty.
+- **Graphite** is lifted and warmed (`#A69E8F`) to stay above 6:1.
+- **Accent** keeps its hue family but is desaturated and lightened
+  (`#C58A82`): saturated red on dark backgrounds vibrates; a faded rose reads
+  as the same correction ink under warm light.
+- **The lamp**: a very faint radial glow at the top of the page
+  (`rgb(255 210 140 / 0.06)`), as if the light falls on the open book.
+- **Photographs** are dimmed (`brightness(0.86)`) so they don't punch holes
+  in the dark page, and the grain switches to sparse light specks.
+
+All of it is the same token names redefined under
+`@media (prefers-color-scheme: dark)`, so no component has dark-mode code.
+Because the tokens are RGB channels, `border-ink/20` etc. keep working in
+both themes.
+
+### 11.4 The type pairing
+
+| Role | Family | Why |
+| --- | --- | --- |
+| Display (headings, name) | **Libre Caslon Display** | Caslon is the classic English book face. The Display cut has sharp, high-contrast serifs drawn for large sizes: presence without weight. |
+| Text (body) | **Libre Caslon Text** | The same family cut for reading: larger x-height and sturdier hairlines, comfortable at 17–18 px on screen. |
+| Metadata (dates, figures, labels) | **IBM Plex Mono** | The lab-notebook layer. Neutral, slightly typewriter-like, with figures that line up. |
+| Marginalia | **La Belle Aurore** | A fine-nibbed, grown-up hand. |
+
+Pairing a Display and a Text cut **of the same family** is the safest way to
+get contrast (sizes, hairlines) without conflict (letter shapes). The mono
+is the deliberate counterpoint: everything machine-like (a date, an index,
+"FIG. 2") is mono; everything human is serif.
+
+How the hand was chosen: about a dozen handwriting faces were rendered side
+by side with the same note in the accent colour. Comic Neue, Caveat, Indie
+Flower, Patrick Hand and Gloria Hallelujah were excluded up front (they read
+as playful). Of the rest, Nanum Pen Script and Kalam looked like marker
+pens, Reenie Beanie and Over the Rainbow too casual, Homemade Apple and
+Zeyada hard to read. La Belle Aurore and Cedarville Cursive looked like an
+adult writing quickly with a fine pen; La Belle Aurore won on legibility.
+It is still only used for a handful of words. Labels inside figures stay in
+mono, because careful people write those carefully.
+
+Engraved caps (`.caps`: the text serif, uppercase, 0.22em tracking) give the
+title-page voice for "Field notes of", "Entry II" and "Colophon".
+
+**The scale** keeps the fluid `clamp()` method from section 2 but with a
+quieter ratio, as books are quieter than magazines: **1.2 at 360 px, 1.25 at
+1440 px**, body 17 → 18 px.
+
+| Token | 360 px | 1440 px | `clamp()` |
+| --- | ---: | ---: | --- |
+| `step--1` | 13 | 13 | `0.8125rem` (labels) |
+| `step-0` | 17 | 18 | `clamp(1.0625rem, 1.0417rem + 0.0926vw, 1.125rem)` |
+| `step-1` | 20.4 | 22.5 | `clamp(1.275rem, 1.231rem + 0.194vw, 1.406rem)` |
+| `step-2` | 24.5 | 28.1 | `clamp(1.53rem, 1.454rem + 0.338vw, 1.758rem)` |
+| `step-3` | 29.4 | 35.2 | `clamp(1.836rem, 1.716rem + 0.535vw, 2.197rem)` |
+| `step-4` | 35.3 | 44 | `clamp(2.203rem, 2.022rem + 0.806vw, 2.747rem)` |
+| `step-5` | 42.3 | 54.9 | `clamp(2.644rem, 2.381rem + 1.169vw, 3.433rem)` |
+| `display` | 48 | 120 | `clamp(3rem, 1.5rem + 6.667vw, 7.5rem)` (the name only) |
+
+### 11.5 How rough.js draws by hand, and why the randomness is seeded
+
+[rough.js](https://roughjs.com) takes an exact shape (a line, an ellipse, a
+curve through points) and returns the path a hand would draw: endpoints
+overshoot slightly, straight lines bow, and by default each stroke is drawn
+twice with small differences, like a pen going over a line. The amount is
+controlled by `roughness` and `bowing`.
+
+All of that comes from random numbers. If those were truly random, the
+drawing would change on every render: the server's HTML wouldn't match the
+browser's (a hydration mismatch), the page would "jitter" between visits,
+and screenshots and visual tests would never be stable. So every shape gets
+a **`seed`**: rough.js then uses a deterministic pseudo-random generator, and
+the same seed always produces the same wobble. Change the seed to get a
+different but equally stable drawing.
+
+Only rough.js's **generator** is used (`src/lib/rough.ts`). It is pure
+maths: shape in, SVG path data (`d` strings) out, no DOM. So every sketch is
+computed in a server component at build time and the browser receives plain
+`<path>` elements and zero JavaScript for the drawings. (This is also why the
+contact section is now a server component with only the form as a client
+component: a client component importing the hand-drawn header would have
+shipped rough.js to the browser.)
+
+Two tricks make one drawing fit any width:
+
+- `preserveAspectRatio="none"` lets a rule drawn in a 1000×8 box stretch to
+  any column width;
+- `vector-effect="non-scaling-stroke"` keeps the pen width constant while
+  the shape stretches.
+
+The figures that are data (the map, the convolution grid, the calibration
+axes) are computed from their real inputs, so they can't drift from the
+truth: change a coordinate and the drawing, the distance note and the scale
+all follow.
+
+**Ink drawing itself.** Every rough path has `pathLength="1"`, which tells
+the browser to treat its length as 1 whatever its real length. A dash
+pattern of `1 1` offset by `1` then hides the whole stroke, and animating
+`stroke-dashoffset` from 1 to 0 draws it from start to end. `<InkDraw>` (a
+tiny client component) flips `data-ink` from `pending` to `drawn` the first
+time the figure scrolls into view, so it happens once. The hiding only
+applies under `prefers-reduced-motion: no-preference`; with reduced motion
+the sketch is simply there, and a `<noscript>` style shows it when
+JavaScript is off.
+
+### 11.6 Paper texture from SVG noise
+
+The grain is an SVG used as a CSS background, about 500 bytes, inlined as a
+data URL in the `--grain` token:
+
+```xml
+<filter id="g">
+  <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/>
+  <feColorMatrix values="0 0 0 0 0.2   0 0 0 0 0.22   0 0 0 0 0.2   0 0 0 0.2 0"/>
+</filter>
+<rect width="100%" height="100%" filter="url(#g)"/>
+```
+
+- `feTurbulence` generates Perlin-style noise. `fractalNoise` with a high
+  `baseFrequency` gives fine fibres rather than clouds; `numOctaves` adds
+  detail; `stitchTiles` makes the tile edges match so it repeats seamlessly.
+- `feColorMatrix` throws away the noise's colours (the first three rows set
+  R, G, B to a fixed grey-green) and keeps its alpha, scaled down (the last
+  row, `0.2`). The result is faint specks of one colour whose density
+  follows the noise.
+- It's tiled at 220 px as `background-image` on `body`, so it scrolls with
+  the page like a sheet, sits under the text and costs no image request.
+  In the dark theme the same filter makes pale specks at `0.07`.
+
+No photographic paper texture, no big JPEG: texture you notice only when you
+look for it is the difference between "paper" and "paper effect".
+
+### 11.7 What lives where
+
+```
+src/app/globals.css               tokens (materials, scale), grain, .mounted, .plate, .caps, .hand, motion
+src/lib/rough.ts                  seeded rough.js helpers (server only)
+src/components/ink.tsx            InkRule, Circled, Underlined, Strokes
+src/components/ink-draw.tsx       draw-once animation trigger (client)
+src/components/sketches/          calibration.tsx (Fig. 1), route-map.tsx (Fig. 2), convolution.tsx (Fig. 3)
+src/components/section-header.tsx "Entry II" header; numerals follow `navigation` order
+src/components/contact.tsx        contact section (server) + contact-form.tsx (client)
+```
+
+On phones the margin annotations fall inline under the entry text, the map
+becomes a vertical route (an ordered list, which also serves screen readers
+on desktop, where the drawing is `aria-hidden`), and the spreads stack
+image-first.
+
+The hero's line illustration (`personalData.heroImage`) is no longer shown:
+its place is taken by Fig. 1, which says something specific about the work.
+The asset and the data field are left untouched.
