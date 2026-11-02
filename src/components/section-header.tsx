@@ -1,4 +1,5 @@
 import { sectionMeta } from '@/lib/site';
+import { InkRule } from '@/components/ink';
 
 type SectionHeaderProps = {
   /** Section id, as used in `navigation` (without the #). */
@@ -9,26 +10,33 @@ type SectionHeaderProps = {
 };
 
 /**
- * The one header every home-page section shares: a hairline rule, the mono
- * index and label in the left three columns, the title from column 4.
- * The index comes from the section's position in `navigation`, so
- * reordering the nav renumbers the page.
+ * Every home-page section opens like a journal entry: "Entry II" in engraved
+ * caps, the title in Caslon Display, and a pen rule. The numeral comes from
+ * the section's position in `navigation`, so the numbering is always true to
+ * the order on the page.
  */
 export default function SectionHeader({ id, title, intro }: SectionHeaderProps) {
-  const { index, label } = sectionMeta(id);
+  const { numeral, label } = sectionMeta(id);
+  const seed = numeral.length * 101 + id.length * 7;
   return (
-    <header className="grid-12 rule reveal gap-y-6 pt-4">
-      <p className="label md:col-span-3">
-        <span className="tabular-nums">{index}</span>
-        <span aria-hidden="true"> — </span>
-        {label}
-      </p>
-      <div className="md:col-span-9">
-        <h2 id={`${id}-title`} className="display text-step-5">
+    <header className="reveal">
+      <div className="grid-12 items-baseline gap-y-3">
+        <p className="caps text-graphite md:col-span-3">
+          Entry <span className="text-ink">{numeral}</span>
+          <span className="sr-only">, {label}</span>
+        </p>
+        <h2 id={`${id}-title`} className="display text-step-5 md:col-span-9">
           {title}
         </h2>
-        {intro ? <p className="mt-6 max-w-measure text-step-1 text-mute">{intro}</p> : null}
       </div>
+      <InkRule seed={seed} strong className="mt-5 text-ink" />
+      {intro ? (
+        <div className="grid-12 mt-6">
+          <p className="max-w-measure text-step-1 italic text-graphite md:col-span-9 md:col-start-4">
+            {intro}
+          </p>
+        </div>
+      ) : null}
     </header>
   );
 }

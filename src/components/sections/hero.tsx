@@ -1,88 +1,77 @@
-import Image from 'next/image';
-import { aiDomains, personalData } from '@/lib/data';
-import { currentRole } from '@/lib/site';
+import { personalData } from '@/lib/data';
+import { currentRole, firstYear } from '@/lib/site';
 import ExternalLink from '@/components/external-link';
 import ParisTime from '@/components/paris-time';
+import { InkRule } from '@/components/ink';
+import CalibrationSketch from '@/components/sketches/calibration';
 
+/**
+ * The title page of the journal: who keeps it, what she does, where and since
+ * when. One sketch (Fig. 1) states the thesis of the work, calibrated
+ * forecasting, and the live Paris time is set as an entry header.
+ */
 export default function Hero() {
   const role = currentRole();
-  const [firstName, ...rest] = personalData.name.split(' ');
-  const lastName = rest.join(' ');
-  const [titleFirst, ...titleRest] = personalData.title.split(' ');
+  const city = role?.location?.split(',')[0] ?? personalData.location;
 
   return (
     <section aria-labelledby="hero-title" className="frame pb-section pt-8 md:pt-12">
-      {/* Status line: the live, slightly personal detail. */}
-      <div className="label flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-ink pb-3">
-        <span className="inline-flex items-center gap-2">
-          <span aria-hidden="true" className="pulse inline-block h-2 w-2 rounded-full bg-ink" />
-          {role ? (
-            <span>
-              Now — {role.role}, {role.company}
-            </span>
-          ) : (
-            <span>{personalData.title}</span>
-          )}
+      {/* Entry header: place, local time, current post. */}
+      <div className="label flex flex-wrap items-center gap-x-6 gap-y-1 text-graphite">
+        <span>
+          {city}, <ParisTime />
         </span>
-        <span className="text-mute">
-          Paris <ParisTime />
-        </span>
-        <span className="hidden text-mute md:ml-auto md:inline">Portfolio — Index</span>
-      </div>
-
-      <div className="grid-12 relative gap-y-10 pt-10 md:pt-16">
-        <h1
-          id="hero-title"
-          className="display relative z-10 text-display md:col-span-12"
-        >
-          <span className="block">{firstName}</span>{' '}
-          <span className="block md:pl-[calc((100%-11*var(--gutter))/12+var(--gutter))]">{lastName}</span>{' '}
-          <span className="mt-[0.08em] block">
-            {titleFirst}{' '}
-            <span className="text-outline">{titleRest.join(' ')}</span>
+        {role ? (
+          <span>
+            Now: <span className="text-ink">{role.role}</span>, {role.company}
           </span>
-        </h1>
+        ) : null}
+      </div>
+      <InkRule seed={2} className="mt-3 text-ink" />
 
-        {/* Figure: placed on the grid, overlapping the type on desktop. */}
-        <figure className="md:absolute md:right-0 md:top-16 md:w-[min(19vw,17rem)]">
-          <Image
-            src={personalData.heroImage.src}
-            alt={personalData.heroImageAlt}
-            width={personalData.heroImage.width}
-            height={personalData.heroImage.height}
-            priority
-            sizes="(min-width: 768px) 19vw, 60vw"
-            className="mx-auto h-auto w-3/5 md:w-full"
-          />
+      <div className="grid-12 gap-y-14 pt-14 md:pt-20 lg:pt-24">
+        <div className="md:col-span-7 lg:col-span-7">
+          <h1 id="hero-title">
+            <span className="caps block text-graphite">Field notes of</span>
+            <span className="display mt-4 block text-display">{personalData.name}</span>
+            <span className="mt-5 block font-serif text-step-2 italic">
+              <span aria-hidden="true" className="text-graphite">— </span>
+              {personalData.title}
+            </span>
+          </h1>
+          <p className="label mt-6 text-graphite">
+            {city}, {personalData.location === city ? '' : `${personalData.location} · `}
+            {firstYear()} – present
+          </p>
+
+          <p className="mt-12 max-w-measure text-step-1">{personalData.headline}</p>
+
+          <ul className="label mt-8 flex flex-wrap gap-x-6">
+            {personalData.socials.map((s) => (
+              <li key={s.kind}>
+                <ExternalLink href={s.url} className="hit link">
+                  {s.label}
+                </ExternalLink>
+              </li>
+            ))}
+            <li>
+              <a href={personalData.resumeUrl} download className="hit link">
+                Résumé (PDF)
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <figure className="md:col-span-5 md:col-start-8 lg:col-span-4 lg:col-start-9">
+          <div className="plate border-y border-ink/15 px-4 pb-4 pt-6">
+            <CalibrationSketch />
+          </div>
+          <figcaption className="mt-3 text-step--1 text-graphite">
+            <span className="label mr-2 text-ink">Fig. 1</span>
+            Calibration, schematic. A forecast is calibrated when the events it calls 70% likely
+            happen about 70% of the time.
+          </figcaption>
         </figure>
-
-        <p className="font-serif text-step-2 italic leading-snug md:col-span-6 md:col-start-1">
-          Based in {personalData.location}.{' '}
-          <span className="not-italic text-mute">{personalData.headline}</span>
-        </p>
-
-        <dl className="label grid grid-cols-2 gap-x-gutter gap-y-6 self-end md:col-span-5 md:col-start-8">
-          <div className="border-t border-ink pt-2">
-            <dt className="text-mute">Field notes</dt>
-            <dd className="mt-1 normal-case tracking-normal">
-              {aiDomains.slice(0, 4).join(' / ')}
-            </dd>
-          </div>
-          <div className="border-t border-ink pt-2">
-            <dt className="text-mute">Elsewhere</dt>
-            <dd className="mt-1">
-              <ul>
-                {personalData.socials.map((s) => (
-                  <li key={s.kind}>
-                    <ExternalLink href={s.url} className="hit link">
-                      {s.label} <span aria-hidden="true">&nbsp;↗</span>
-                    </ExternalLink>
-                  </li>
-                ))}
-              </ul>
-            </dd>
-          </div>
-        </dl>
       </div>
     </section>
   );

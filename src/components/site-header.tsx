@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { navigation, personalData } from '@/lib/data';
-import { homeHref } from '@/lib/site';
+import { homeHref, roman } from '@/lib/site';
 import { cn } from '@/lib/utils';
 
 /**
@@ -99,25 +99,19 @@ export default function SiteHeader() {
   }, [open, close]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-ink bg-paper">
+    <header className="sticky top-0 z-50 border-b border-ink/20 bg-paper">
       <div className="frame flex h-header items-center justify-between gap-6">
         <Link
           href="/"
-          className="hit gap-3 font-display text-step-0 font-bold tracking-tight"
+          className="hit gap-2 font-display text-step-1 leading-none"
           aria-label={`${personalData.name}, home`}
         >
-          <span
-            aria-hidden="true"
-            className="grid h-8 w-8 place-items-center bg-ink font-mono text-[0.6875rem] font-bold text-paper"
-          >
-            {personalData.initials}
-          </span>
-          <span className="hidden sm:inline">{personalData.name}</span>
+          <span aria-hidden="true">{personalData.name}</span>
         </Link>
 
         <nav aria-label="Main" className="hidden lg:block">
           <ul className="flex items-center gap-1">
-            {navigation.map((item, i) => {
+            {navigation.map((item) => {
               const id = item.href.slice(1);
               const isActive = active === id;
               return (
@@ -126,15 +120,14 @@ export default function SiteHeader() {
                     href={homeHref(item.href)}
                     aria-current={isActive ? 'location' : undefined}
                     className={cn(
-                      'label hit group gap-1.5 px-2.5 text-mute transition-colors duration-200 hover:text-ink',
-                      isActive && 'text-ink'
+                      'label hit group px-2.5 text-graphite transition-colors duration-200 hover:text-ink',
+                      isActive && 'text-accent hover:text-accent'
                     )}
                   >
-                    <span className="text-step--2 tabular-nums">{String(i + 1).padStart(2, '0')}</span>
                     <span
                       className={cn(
-                        'border-b border-transparent pb-px transition-colors duration-200 group-hover:border-ink',
-                        isActive && 'border-ink'
+                        'border-b border-transparent pb-px transition-colors duration-200 group-hover:border-ink/50',
+                        isActive && 'border-accent group-hover:border-accent'
                       )}
                     >
                       {item.label}
@@ -150,7 +143,7 @@ export default function SiteHeader() {
           <a
             href={personalData.resumeUrl}
             download
-            className="label hit hidden gap-2 border border-ink px-4 transition-colors duration-200 hover:bg-ink hover:text-paper sm:inline-flex"
+            className="label hit hidden gap-2 border border-ink/60 px-4 transition-colors duration-200 hover:border-ink hover:bg-ink hover:text-paper sm:inline-flex"
           >
             Résumé <span aria-hidden="true">↓</span>
           </a>
@@ -188,16 +181,18 @@ export default function SiteHeader() {
         className="fixed inset-x-0 bottom-0 top-header overflow-y-auto bg-paper lg:hidden"
       >
         <nav aria-label="Mobile" className="frame flex min-h-full flex-col pb-10 pt-6">
-          <ul className="border-t border-ink">
+          <ul className="border-t border-ink/60">
             {navigation.map((item, i) => (
-              <li key={item.href} className="border-b border-ink">
+              <li key={item.href} className="border-b border-ink/20">
                 <Link
                   href={homeHref(item.href)}
                   onClick={() => close(false)}
                   className="flex min-h-11 items-baseline gap-4 py-4"
                 >
-                  <span className="label text-mute tabular-nums">{String(i + 1).padStart(2, '0')}</span>
-                  <span className="display text-step-4">{item.label}</span>
+                  <span aria-hidden="true" className="caps w-10 text-graphite">
+                    {roman(i + 1)}
+                  </span>
+                  <span className="display text-step-3">{item.label}</span>
                 </Link>
               </li>
             ))}
@@ -205,7 +200,7 @@ export default function SiteHeader() {
           <a
             href={personalData.resumeUrl}
             download
-            className="label mt-8 inline-flex min-h-11 items-center justify-between border border-ink px-4"
+            className="label mt-8 inline-flex min-h-11 items-center justify-between border border-ink/60 px-4"
           >
             Download résumé <span aria-hidden="true">↓</span>
           </a>

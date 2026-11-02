@@ -6,11 +6,9 @@ export const size = ogSize;
 export const contentType = 'image/png';
 
 export default async function OpengraphImage() {
-  const [first, ...rest] = personalData.title.split(' ');
   return renderOg({
-    kicker: `Based in ${personalData.location}`,
-    title: first,
-    outlined: rest.join(' '),
+    kicker: `Field notes · ${personalData.title}`,
+    title: personalData.name,
     footer: personalData.headline,
   });
 }

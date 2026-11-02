@@ -17,7 +17,7 @@ export default async function ProjectOpengraphImage({
   const { slug } = await params;
   const project = getProjectBySlug(slug);
   return renderOg({
-    kicker: `Case study ${project?.index ?? ''}`,
+    kicker: `Field notes · Entry No. ${project?.index ?? ''}`,
     title: project?.title ?? 'Project',
     footer: project?.tagline ?? '',
   });

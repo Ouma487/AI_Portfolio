@@ -2,7 +2,7 @@
  * Small derived values the UI needs. Pure functions over data.ts: no React,
  * so they work in server components, client components and route handlers.
  */
-import { experience, navigation, type Experience } from '@/lib/data';
+import { education, experience, navigation, type Experience } from '@/lib/data';
 
 /**
  * The absolute origin of the deployed site. Used as `metadataBase`, so that
@@ -29,11 +29,42 @@ export function currentRole(): Experience | undefined {
   return sortedExperience().find((e) => !e.end);
 }
 
-/** "01", "02"... from a section's position in `navigation`. */
-export function sectionMeta(id: string): { index: string; label: string } {
+/** Roman numerals for journal entries (1 -> "I", 4 -> "IV"). */
+export function roman(n: number): string {
+  const table: [number, string][] = [
+    [10, 'X'],
+    [9, 'IX'],
+    [5, 'V'],
+    [4, 'IV'],
+    [1, 'I'],
+  ];
+  let out = '';
+  for (const [value, numeral] of table) {
+    while (n >= value) {
+      out += numeral;
+      n -= value;
+    }
+  }
+  return out;
+}
+
+/** "01" and "I" from a section's position in `navigation`. */
+export function sectionMeta(id: string): { index: string; numeral: string; label: string } {
   const position = navigation.findIndex((n) => n.href === `#${id}`);
   const label = position >= 0 ? navigation[position].label : id;
-  return { index: String(position + 1).padStart(2, '0'), label };
+  return {
+    index: String(position + 1).padStart(2, '0'),
+    numeral: roman(position + 1),
+    label,
+  };
+}
+
+/** The first year in the record (earliest education or job), e.g. "2019". */
+export function firstYear(): string {
+  const years = [...education.map((e) => e.period), ...experience.map((e) => e.start)]
+    .map((s) => s.match(/\d{4}/)?.[0])
+    .filter((y): y is string => Boolean(y));
+  return years.sort()[0] ?? '';
 }
 
 /** Turn an in-page anchor into a link that also works from other pages. */

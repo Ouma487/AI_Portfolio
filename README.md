@@ -8,7 +8,8 @@ and has a contact form that emails messages straight to her inbox.
 
 - **[Next.js 15](https://nextjs.org)** (App Router) with **React 18** and **TypeScript**
 - **[Tailwind CSS](https://tailwindcss.com)** with a small token system (see `docs/notes/frontend.md`)
-- **next/font** with Archivo, Newsreader and JetBrains Mono
+- **next/font** with Libre Caslon (Display + Text), IBM Plex Mono and La Belle Aurore
+- **[rough.js](https://roughjs.com)** to generate the hand-drawn ink sketches at build time
 - **Server Actions** + **[zod](https://zod.dev)** validation for the contact form
 - **[Resend](https://resend.com)** to deliver contact form email
 
@@ -44,17 +45,20 @@ src/
     opengraph-image.tsx   Generated social preview image (next/og)
     sitemap.ts, robots.ts sitemap.xml and robots.txt
     actions.ts            Contact form Server Action (validation + Resend)
-    globals.css           Design tokens (type scale, grid, palette) and motion
+    globals.css           Design tokens (type scale, grid, paper/ink palette, grain) and motion
   components/
     sections/             Home page sections (hero, projects, experience, ...)
     contact.tsx           Contact section and form (client component)
     site-header.tsx       Sticky nav, active section, mobile menu
     site-footer.tsx       Footer
-    section-header.tsx    The shared "01 — Label" section header
+    section-header.tsx    The shared "Entry II" journal-entry header
+    ink.tsx, ink-draw.tsx Hand-drawn rules, circles and underlines; the draw-once animation
+    sketches/             Fig. 1 calibration, Fig. 2 route map, Fig. 3 convolution
   lib/
     data.ts               All site content: bio, projects, experience, skills
     site.ts               Derived values: site URL, sorted experience, section numbers
     og.tsx                Shared renderer for Open Graph images
+    rough.ts              Seeded rough.js helpers (pure maths, runs on the server)
     utils.ts              cn() class-name helper
 public/                   Images, icons, logos and the CV PDF
 docs/

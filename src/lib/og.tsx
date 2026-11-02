@@ -28,25 +28,29 @@ type OgProps = {
   kicker: string;
   /** The big line. */
   title: string;
-  /** Optional outlined word appended to the title. */
-  outlined?: string;
   /** Bottom line, e.g. the tagline. */
   footer: string;
 };
 
-/** A monochrome, typographic card shared by the site and project OG images. */
-export async function renderOg({ kicker, title, outlined, footer }: OgProps) {
-  const glyphs = `${kicker}${title}${outlined ?? ''}${footer}${personalData.name}0123456789—·/`;
+// The journal palette (light theme), as hex because Satori has no CSS variables.
+const PAPER = '#E6E7DC';
+const INK = '#1B2331';
+const GRAPHITE = '#555B5E';
+const ACCENT = '#8A2D33';
+
+/** A typographic journal page shared by the site and project OG images. */
+export async function renderOg({ kicker, title, footer }: OgProps) {
+  const glyphs = `${kicker}${title}${footer}${personalData.name}0123456789—·/`;
   const [display, mono] = await Promise.all([
-    loadGoogleFont('Archivo', 800, glyphs),
-    loadGoogleFont('JetBrains Mono', 500, glyphs),
+    loadGoogleFont('Libre Caslon Display', 400, glyphs),
+    loadGoogleFont('IBM Plex Mono', 400, glyphs.toUpperCase()),
   ]);
   const fonts = [
-    display && { name: 'Archivo', data: display, weight: 800 as const, style: 'normal' as const },
-    mono && { name: 'JetBrains Mono', data: mono, weight: 500 as const, style: 'normal' as const },
-  ].filter(Boolean) as { name: string; data: ArrayBuffer; weight: 800 | 500; style: 'normal' }[];
+    display && { name: 'Caslon', data: display, weight: 400 as const, style: 'normal' as const },
+    mono && { name: 'Plex Mono', data: mono, weight: 400 as const, style: 'normal' as const },
+  ].filter(Boolean) as { name: string; data: ArrayBuffer; weight: 400; style: 'normal' }[];
 
-  const titleSize = title.length > 28 ? 84 : 120;
+  const titleSize = title.length > 28 ? 92 : 128;
 
   return new ImageResponse(
     (
@@ -57,22 +61,23 @@ export async function renderOg({ kicker, title, outlined, footer }: OgProps) {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          background: '#ffffff',
-          color: '#0a0a0a',
+          background: PAPER,
+          color: INK,
           padding: '56px 64px',
-          fontFamily: 'Archivo',
+          fontFamily: 'Caslon',
         }}
       >
         <div
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-            borderBottom: '2px solid #0a0a0a',
+            borderBottom: `1.5px solid ${INK}`,
             paddingBottom: 16,
-            fontFamily: 'JetBrains Mono',
-            fontSize: 24,
+            fontFamily: 'Plex Mono',
+            fontSize: 22,
             letterSpacing: 2,
             textTransform: 'uppercase',
+            color: GRAPHITE,
           }}
         >
           <span>{personalData.name}</span>
@@ -83,24 +88,20 @@ export async function renderOg({ kicker, title, outlined, footer }: OgProps) {
             display: 'flex',
             flexWrap: 'wrap',
             fontSize: titleSize,
-            fontWeight: 800,
-            lineHeight: 0.95,
-            letterSpacing: -4,
+            lineHeight: 1.02,
+            letterSpacing: -1,
           }}
         >
-          <span style={{ marginRight: 28 }}>{title}</span>
-          {outlined ? (
-            <span style={{ color: '#ffffff', WebkitTextStroke: '3px #0a0a0a' }}>{outlined}</span>
-          ) : null}
+          {title}
         </div>
         <div
           style={{
             display: 'flex',
-            borderTop: '2px solid #0a0a0a',
+            borderTop: `1.5px solid ${ACCENT}`,
             paddingTop: 16,
-            fontFamily: 'JetBrains Mono',
-            fontSize: 24,
-            lineHeight: 1.4,
+            fontFamily: 'Caslon',
+            fontSize: 30,
+            lineHeight: 1.35,
           }}
         >
           {footer}
