@@ -54,9 +54,6 @@ export default function Hero() {
             sizes="(min-width: 768px) 19vw, 60vw"
             className="mx-auto h-auto w-3/5 md:w-full"
           />
-          <figcaption className="label mt-2 text-center text-step--2 text-mute md:text-right">
-            Fig. 0 — At work
-          </figcaption>
         </figure>
 
         <p className="font-serif text-step-2 italic leading-snug md:col-span-6 md:col-start-1">

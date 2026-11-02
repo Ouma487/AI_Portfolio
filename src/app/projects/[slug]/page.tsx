@@ -147,9 +147,6 @@ const ProjectPage = async ({ params }: ProjectPageProps) => {
           priority
           className="mono-img h-auto max-h-[80vh] w-full border border-ink object-cover"
         />
-        <figcaption className="label mt-3 flex justify-between gap-4 text-step--2 text-mute">
-          <span>Fig. {Number(project.index)} — {project.title}, cover image</span>
-        </figcaption>
       </figure>
 
       {/* Highlight figures */}

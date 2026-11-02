@@ -21,9 +21,6 @@ export default function About() {
             sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 100vw"
             className="mono-img h-auto w-full rounded-[12px] border-4 border-ink transition-[filter] duration-500 hover:filter-none"
           />
-          <figcaption className="label mt-3 text-step--2 text-mute">
-            Fig. 1 — {personalData.name}, {personalData.location}
-          </figcaption>
         </figure>
 
         <div className="md:col-span-7 md:col-start-6">
