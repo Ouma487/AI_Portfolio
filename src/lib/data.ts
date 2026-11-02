@@ -169,7 +169,7 @@ export const personalData: PersonalData = {
   about: [
     'I trained as an engineer at CentraleSupélec, specialising in computer vision and AI, with a grounding in statistics, optimization and machine learning.',
     'Since then I’ve worked on interpretable defect classification at Renault and on multimodal retrieval and LLM-driven content automation at Libertify. Since January 2026 I’ve been at Kairos Research AI, building calibrated forecasting models and taking them from backtest to live production. My toolkit is Python, PyTorch, LightGBM and SQL, deployed on AWS and GCP.',
-    'I like taking a messy technical problem, finding the model that actually fits it, and shipping it as a pipeline other people can rely on. Outside work, I play story-driven video games, read, and keep learning about physics, mathematics and the universe, often through podcasts like StarTalk.',
+    'I like taking a messy technical problem, finding the model that actually fits it, and shipping it as a pipeline other people can rely on. Outside work, I play story-driven video games, read, and keep learning about physics, mathematics and the universe through books and podcasts.',
   ],
   location: 'France',
   email: EMAIL,
