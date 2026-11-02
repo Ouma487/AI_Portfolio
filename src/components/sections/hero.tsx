@@ -1,5 +1,5 @@
 import { personalData } from '@/lib/data';
-import { currentRole, firstYear } from '@/lib/site';
+import { currentRole } from '@/lib/site';
 import ExternalLink from '@/components/external-link';
 import ParisTime from '@/components/paris-time';
 import { InkRule } from '@/components/ink';
@@ -40,8 +40,8 @@ export default function Hero() {
             </span>
           </h1>
           <p className="label mt-6 text-graphite">
-            {city}, {personalData.location === city ? '' : `${personalData.location} · `}
-            {firstYear()} – present
+            {city}
+            {personalData.location === city ? '' : `, ${personalData.location}`}
           </p>
 
           <p className="mt-12 max-w-measure text-step-1">{personalData.headline}</p>

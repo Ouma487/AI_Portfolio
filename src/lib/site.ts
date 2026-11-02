@@ -2,7 +2,7 @@
  * Small derived values the UI needs. Pure functions over data.ts: no React,
  * so they work in server components, client components and route handlers.
  */
-import { education, experience, navigation, type Experience } from '@/lib/data';
+import { experience, navigation, type Experience } from '@/lib/data';
 
 /**
  * The absolute origin of the deployed site. Used as `metadataBase`, so that
@@ -57,14 +57,6 @@ export function sectionMeta(id: string): { index: string; numeral: string; label
     numeral: roman(position + 1),
     label,
   };
-}
-
-/** The first year in the record (earliest education or job), e.g. "2019". */
-export function firstYear(): string {
-  const years = [...education.map((e) => e.period), ...experience.map((e) => e.start)]
-    .map((s) => s.match(/\d{4}/)?.[0])
-    .filter((y): y is string => Boolean(y));
-  return years.sort()[0] ?? '';
 }
 
 /** Turn an in-page anchor into a link that also works from other pages. */
