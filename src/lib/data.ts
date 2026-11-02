@@ -479,7 +479,7 @@ export const experience: Experience[] = [
       'Contributed to predictive maintenance work and annotated datasets for model training.',
       'Worked with risk and business teams to align analytics output with operational KPIs.',
     ],
-    stack: ['Python', 'NLP', 'Computer vision', 'Multimodal LLMs'],
+    stack: ['Python', 'GCP', 'NLP', 'Computer vision', 'Multimodal LLMs'],
     logo: { src: '/logos/renault.webp', width: 98, height: 128 },
     logoAlt: 'Renault logo',
   },
